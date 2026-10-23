@@ -16,7 +16,7 @@ export const LONG_LABEL = 'Delší doba';
    p = cena za DURATIONS[i] (u paddleboardu PADDLE_DURATIONS[i]), dep = vratná záloha, ship = doprava jedna cesta */
 export const PRODUCTS = [
   {
-    id: 'rm', slug: 'rotoped-magneticky', scene: true, gallery: ['rm-produkt', 'rm-interier'], cat: 'Rotopedy a cyklotrenažery', name: 'Rotoped magnetický',
+    id: 'rm', slug: 'rotoped-magneticky', scene: true, gallery: ['rm-produkt'], cat: 'Rotopedy a cyklotrenažery', name: 'Rotoped magnetický',
     feats: ['Vhodný pro rehabilitaci – stabilní a šetrný ke kloubům', 'Tichý chod – neruší sousedy ani sledování televize', 'Nepotřebuje zásuvku – umístíte ho kamkoliv', 'Dodáme složený a seřízený – bez nutnosti montáže'],
     p: [600, 800, 1200, 1600], dep: 3000, ship: 300
   },
@@ -26,7 +26,7 @@ export const PRODUCTS = [
     p: [900, 1200, 1800, 2400], dep: 4000, ship: 300
   },
   {
-    id: 'bp', slug: 'bezecky-pas-elektronicky', scene: true, gallery: ['bp-produkt', 'bp-1', 'bp-2', 'bp-3', 'bp-4'], cat: 'Běžecké pásy', name: 'Běžecký pás elektronický',
+    id: 'bp', slug: 'bezecky-pas-elektronicky', scene: true, gallery: ['bp-produkt'], cat: 'Běžecké pásy', name: 'Běžecký pás elektronický',
     feats: ['Stabilní – nosnost min. 120 kg, běžecká plocha 40+ cm', 'Sklápěcí konstrukce – po tréninku šetří místo', 'Dodáme složený a seřízený – nemusíte nic montovat', 'Možnost dopravy – s výnosem až do bytu'],
     p: [1600, 2200, 3300, 4400], dep: 5000, ship: 400
   },
