@@ -55,6 +55,13 @@ $$('details.more').forEach((d) => d.addEventListener('toggle', () => {
   $('[data-more-label]', d).textContent = d.open ? 'Skrýt další informace' : 'Zobrazit další informace';
 }));
 
+// video v úvodu: kdo má v systému omezené animace, uvidí jen úvodní snímek
+const heroVideo = $('[data-hero-video]');
+if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  heroVideo.removeAttribute('autoplay');
+  heroVideo.pause();
+}
+
 // ---------- překreslení podle stavu ----------
 
 function selectedProduct() {
