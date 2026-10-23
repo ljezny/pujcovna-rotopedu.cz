@@ -31,7 +31,7 @@ test('validní poptávka projde a pošle dva e-maily', async () => {
   assert.equal(res.status, 200);
   assert.deepEqual(res.body, { ok: true });
   assert.equal(sent.length, 2);
-  assert.equal(sent[0].to, 'zlin@pujcovna-rotopedu.cz');
+  assert.equal(sent[0].to, 'rezervace@pujcovna-rotopedu.cz');
   assert.equal(sent[0].replyTo, 'jana@example.cz');
   assert.equal(sent[1].to, 'jana@example.cz');
 });

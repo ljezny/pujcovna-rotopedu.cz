@@ -32,7 +32,7 @@ npm test
 ## Formulář
 
 Po odeslání odchází dva e-maily:
-1. **Provozovateli** na `ORDER_EMAIL` (výchozí `zlin@pujcovna-rotopedu.cz`). From je jméno zákazníka, Reply-To jeho e-mail.
+1. **Provozovateli** na `ORDER_EMAIL` (výchozí `rezervace@pujcovna-rotopedu.cz`). From je jméno zákazníka, Reply-To jeho e-mail.
 2. **Zákazníkovi** potvrzení (selhání se jen zaloguje).
 
 Proměnné prostředí (Vercel → Project → Settings → Environment Variables): `ORDER_EMAIL`, `SMTP_FROM`,

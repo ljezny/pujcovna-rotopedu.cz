@@ -34,5 +34,5 @@ app.use((err, _req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`Půjčovna rotopedů running on http://localhost:${PORT}`);
-  console.log(`Inquiries will be sent to: ${process.env.ORDER_EMAIL || 'zlin@pujcovna-rotopedu.cz'}`);
+  console.log(`Inquiries will be sent to: ${process.env.ORDER_EMAIL || 'rezervace@pujcovna-rotopedu.cz'}`);
 });
