@@ -5,6 +5,8 @@
  *
  *   node scripts/ai-fotky.mjs generate [--only vt,bp] [--n 2] [--src ~/Desktop/foto]
  *       → varianty do ai-fotky/<id>-<n>.png (složka je v .gitignore)
+ *   node scripts/ai-fotky.mjs hero [--style kolaz|scena] [--n 2]
+ *       → úvodní fotka (na výšku) ze všech hlavních strojů do ai-fotky/hero-<styl>-<n>.png
  *   node scripts/ai-fotky.mjs apply vt=2 bp=1 …
  *       → vybraná varianta do public/images/stroje/<id>.jpg,
  *         původní produktovka se přesune do public/images/stroje/galerie/<id>-produkt.jpg
@@ -45,14 +47,33 @@ the sticker's logo and the text "www.PUJCOVNA-ROTOPEDU.cz" must be reproduced ex
 The whole machine is visible, standing naturally on the floor in a realistic position and scale, with realistic shadows. \
 Eye-level camera, slight three-quarter view, photorealistic interior photography, no people, no other text.`;
 
+/** úvodní fotka: stroje, které na ní mají být (id z PHOTOS) */
+const HERO_MACHINES = ['rm', 'sk', 'bp', 'vt', 'om'];
+const HERO_PROMPTS = {
+  kolaz: `Create a portrait photo collage for the hero section of a fitness equipment rental website. \
+Use exactly the five exercise machines from the input images (an upright exercise bike, a spinning bike, a treadmill, a rowing machine and an elliptical trainer), \
+each as its own photo tile in a clean grid with thin white gaps between the tiles. \
+Every tile shows one machine in a bright, modern, tidy Czech apartment (wooden floor, rug, plants, soft natural daylight), \
+all tiles share the same warm, light color grading so the collage looks consistent. \
+Keep each machine exactly as it is: same shape, colors, proportions and logos; do not add, remove or redesign any part. \
+Each machine fully visible in its tile, realistic shadows, photorealistic interior photography, no people, no text, no captions.`,
+  scena: `Create one portrait photorealistic photo for the hero section of a fitness equipment rental website: \
+a bright, spacious, modern Czech apartment living room with light wooden floor, rugs, plants and soft natural daylight from large windows, \
+where all five exercise machines from the input images stand neatly arranged together (an upright exercise bike, a spinning bike, a treadmill, a rowing machine and an elliptical trainer). \
+Keep each machine exactly as it is: same shape, colors, proportions and logos; do not add, remove or redesign any part. \
+All machines fully visible, realistic scale relative to each other and to the room, realistic shadows, eye-level camera, \
+inviting and uncluttered composition, no people, no text.`
+};
+
 // ---------- pomocné ----------
 
 function args() {
   const [cmd, ...rest] = process.argv.slice(2);
-  const opts = { only: null, n: 2, src: path.join(homedir(), 'Desktop/foto'), picks: [] };
+  const opts = { only: null, n: 2, style: 'kolaz', src: path.join(homedir(), 'Desktop/foto'), picks: [] };
   for (let i = 0; i < rest.length; i++) {
     if (rest[i] === '--only') opts.only = rest[++i].split(',');
     else if (rest[i] === '--n') opts.n = Number(rest[++i]);
+    else if (rest[i] === '--style') opts.style = rest[++i];
     else if (rest[i] === '--src') opts.src = rest[++i].replace(/^~/, homedir());
     else opts.picks.push(rest[i]);
   }
@@ -61,7 +82,7 @@ function args() {
 
 /** API bere png/jpeg/webp — AVIF a spol. převedeme přes macOS `sips` na PNG. */
 function toPng(file) {
-  const out = path.join(tmpdir(), `ai-fotky-${path.basename(file).replace(/\W+/g, '-')}.png`);
+  const out = path.join(tmpdir(), `ai-fotky-${process.pid}-${path.basename(file).replace(/\W+/g, '-')}.png`); // pid: souběžné běhy si nepřepisují soubory
   execFileSync('sips', ['-s', 'format', 'png', file, '--out', out], { stdio: 'ignore' });
   return out;
 }
@@ -72,12 +93,12 @@ function findSource(src, name) {
   return path.join(src, file);
 }
 
-async function edit(imageFiles, n) {
+async function edit(imageFiles, n, prompt = PROMPT, size = '1536x1024') {
   const form = new FormData();
   form.append('model', MODEL);
-  form.append('prompt', PROMPT);
+  form.append('prompt', prompt);
   form.append('n', String(n));
-  form.append('size', '1536x1024');
+  form.append('size', size);
   form.append('quality', 'high');
   // gpt-image-2 parametr nepodporuje (detaily drží sám), gpt-image-1.x ano
   if (MODEL.startsWith('gpt-image-1')) form.append('input_fidelity', 'high');
@@ -105,17 +126,31 @@ async function generate({ only, n, src }) {
     console.log(`→ ${id} (${name}), ${n}× ${MODEL} …`);
     const started = Date.now();
     const body = await edit([toPng(findSource(src, name)), sticker], n);
-    // číslujeme dál, ať nová várka nepřepíše předchozí varianty
-    let next = 1;
-    while (existsSync(path.join(OUT, `${id}-${next}.png`))) next++;
-    body.data.forEach((img, i) => {
-      const file = path.join(OUT, `${id}-${next + i}.png`);
-      writeFileSync(file, Buffer.from(img.b64_json, 'base64'));
-      console.log(`  ✓ ${path.relative(ROOT, file)} (${MODEL})`);
-    });
-    if (body.usage) console.log(`  tokeny: ${JSON.stringify(body.usage)}`);
-    console.log(`  ${Math.round((Date.now() - started) / 1000)} s`);
+    save(id, body, started);
   }
+}
+
+/** uloží varianty jako <prefix>-<n>.png — číslujeme dál, ať nová várka nepřepíše předchozí */
+function save(prefix, body, started) {
+  let next = 1;
+  while (existsSync(path.join(OUT, `${prefix}-${next}.png`))) next++;
+  body.data.forEach((img, i) => {
+    const file = path.join(OUT, `${prefix}-${next + i}.png`);
+    writeFileSync(file, Buffer.from(img.b64_json, 'base64'));
+    console.log(`  ✓ ${path.relative(ROOT, file)} (${MODEL})`);
+  });
+  console.log(`  ${Math.round((Date.now() - started) / 1000)} s`);
+}
+
+async function hero({ style, n, src }) {
+  if (!process.env.OPENAI_API_KEY) throw new Error('Chybí OPENAI_API_KEY v .env.local');
+  if (!HERO_PROMPTS[style]) throw new Error(`Neznámý styl „${style}“ (${Object.keys(HERO_PROMPTS).join(', ')})`);
+  mkdirSync(OUT, { recursive: true });
+  const byId = Object.fromEntries(Object.entries(PHOTOS).map(([name, id]) => [id, name]));
+  const images = HERO_MACHINES.map((id) => toPng(findSource(src, byId[id])));
+  console.log(`→ hero (${style}), ${n}× ${MODEL} …`);
+  const started = Date.now();
+  save(`hero-${style}`, await edit(images, n, HERO_PROMPTS[style], '1024x1536'), started);
 }
 
 function apply({ picks }) {
@@ -134,5 +169,6 @@ function apply({ picks }) {
 
 const { cmd, opts } = args();
 if (cmd === 'generate') await generate(opts);
+else if (cmd === 'hero') await hero(opts);
 else if (cmd === 'apply') { apply(opts); console.log('→ teď spusť npm run build (nové otisky obrázků, jinak prohlížeče drží staré fotky)'); }
 else console.log('Použití: node scripts/ai-fotky.mjs generate [--only vt] [--n 2] | apply vt=2 bp=1');
