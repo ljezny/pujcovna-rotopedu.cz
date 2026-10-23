@@ -23,7 +23,7 @@ test('každý stroj má detail se stejnou adresou jako na původním webu', () =
 test('detail má předvyplněný stroj a ceny z katalogu', () => {
   const html = pages['public/produkt/rotoped-magneticky.html'];
   assert.match(html, /data-preselect="rm"/);
-  assert.match(html, /<td>800<\/td>/);
+  assert.match(html, /<strong>800 Kč<\/strong>/);
   assert.match(html, /<title>Rotoped magnetický - /);
   assert.ok(!/\{\{|include:/.test(html));
 });

@@ -14,7 +14,7 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { PRODUCTS, DURATIONS, PADDLE_DURATIONS, fmt } from '../public/js/katalog.js';
+import { PRODUCTS, DURATIONS, PADDLE_DURATIONS, DEFAULT_DURATION, fmt } from '../public/js/katalog.js';
 import { icon, iconFor } from './ikony.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -23,7 +23,7 @@ const read = (p) => readFileSync(path.join(ROOT, p), 'utf8');
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // Proměnné, které obsahují hotové HTML — ostatní se escapují.
-const RAW = new Set(['content', 'thumbs', 'feats', 'priceRows', 'durationHeads', 'others', 'preselect', 'sceneClass']);
+const RAW = new Set(['content', 'thumbs', 'feats', 'prices', 'others', 'preselect', 'sceneClass']);
 
 function render(template, vars) {
   const withPartials = template
@@ -143,8 +143,13 @@ function productPage(slug, items, version) {
       ? `<div class="gallery__thumbs">${images.map((src, i) => `<button type="button" data-gallery-thumb="${src}" aria-label="Fotka ${i + 1}"${i === 0 ? ' aria-current="true"' : ''}><img src="${src}" alt="" loading="lazy" width="120" height="120"></button>`).join('')}</div>`
       : '',
     feats: main.feats.map((f) => `<li>${esc(f)}</li>`).join(''),
-    durationHeads: durations.map((d) => `<th scope="col">${esc(d)}</th>`).join(''),
-    priceRows: items.map((p) => `<tr><th scope="row">${esc(p.name)}</th>${p.p.map((v) => `<td>${fmt(v)}</td>`).join('')}<td class="ptable__long">dohodou</td><td>${fmt(p.dep)}</td></tr>`).join(''),
+    // ceny jako dlaždice (zalomí se, nic se neposouvá); víc variant (orbitreky) = víc bloků s nadpisem
+    prices: items.map((p) => `<div class="prices">${items.length > 1 ? `<span class="prices__name">${esc(p.name)}</span>` : ''}<div class="prices__grid">${
+      // 4 týdny = nejčastější pronájem → zvýrazněný (u paddleboardu jiné délky, tam ne)
+      p.p.map((v, i) => (i === DEFAULT_DURATION && !p.paddle
+        ? `<div class="price price--best"><em>Nejoblíbenější</em><span>${esc(durations[i])}</span><strong>${fmt(v)} Kč</strong></div>`
+        : `<div class="price"><span>${esc(durations[i])}</span><strong>${fmt(v)} Kč</strong></div>`)).join('')
+    }<div class="price price--long"><span>Delší doba</span><strong>dohodou</strong></div></div><span class="prices__dep">Vratná záloha ${fmt(p.dep)} Kč</span></div>`).join(''),
     ship: fmt(main.ship),
     content: splitContent(body).split('\n').map((l) => `      ${l}`).join('\n'),
     others: others.map((p) => `<a class="other" href="/produkt/${p.slug}"><img src="/images/stroje/${p.img || p.id}.jpg" alt="" loading="lazy" width="160" height="120"><span>${esc(pageName(p.slug))}</span><small>od ${fmt(p.p[0])} Kč</small></a>`).join(''),

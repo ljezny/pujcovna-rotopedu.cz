@@ -173,7 +173,6 @@ select option { color: var(--ink); }
 .long-note strong { font-size: 18px; }
 .long-note p { margin: 6px 0 0; font-size: 16px; line-height: 1.5; color: var(--text); }
 .long-note a { text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
-.ptable td.ptable__long { color: var(--muted); font-style: italic; }
 .extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
 .extra { background: var(--paper); border-radius: 4px; padding: 20px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
 .extra strong { font-size: 17px; }
@@ -197,13 +196,20 @@ select option { color: var(--ink); }
 .detail__info h1 { margin: 0; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; font-weight: 800; font-stretch: 110%; letter-spacing: -0.03em; }
 .detail__headline { margin: 0; font-size: 20px; line-height: 1.45; color: var(--text); }
 .detail__feats { font-size: 16px; gap: 10px; flex: none; }
-.ptable { overflow-x: auto; border: 1px solid var(--line-2); border-radius: 4px; background: #fff; }
-.ptable table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 15px; }
-.ptable th, .ptable td { padding: 12px 14px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
-.ptable thead th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
-.ptable tbody th { text-align: left; font-weight: 600; white-space: normal; }
-.ptable tbody tr:last-child > * { border-bottom: 0; }
-.ptable td:last-child { color: var(--muted); }
+/* ceny na detailu: dlaždice délek pronájmu */
+.prices { display: flex; flex-direction: column; gap: 8px; }
+.prices__name { font-weight: 700; font-size: 16px; }
+.prices__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+.price { background: #fff; border: 1px solid var(--line-2); border-radius: 6px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; font-variant-numeric: tabular-nums; }
+.price span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.price strong { font-size: 20px; font-weight: 800; white-space: nowrap; }
+.price--best { position: relative; background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.price--best span { color: var(--dark-muted); }
+.price--best em { position: absolute; top: -9px; left: 10px; background: var(--accent); color: var(--ink); font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.prices__grid { padding-top: 9px; } /* místo pro štítek nad dlaždicí */
+.price--long { background: var(--tint); border-style: dashed; }
+.price--long strong { font-size: 17px; font-weight: 700; color: var(--text); }
+.prices__dep { font-size: 14px; color: var(--muted); }
 .detail__body { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 64px; align-items: start; }
 @media (max-width: 860px) { .detail__body { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
 .prose { font-size: 17px; line-height: 1.65; color: var(--text); max-width: 720px; }
