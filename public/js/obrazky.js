@@ -2,8 +2,7 @@
 export const VERZE = {
   "hero-video.jpg": "2248f0f2",
   "hero.jpg": "e6875f92",
-  "logo-znak.png": "cf18983c",
-  "logo.png": "84a4c981",
+  "logo-znak.jpg": "72397b74",
   "stroje/bo.jpg": "475c355f",
   "stroje/bp.jpg": "7d26343b",
   "stroje/ct.jpg": "0f8468e5",

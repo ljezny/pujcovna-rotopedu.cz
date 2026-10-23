@@ -55,13 +55,26 @@ select option { color: var(--ink); }
 /* hlavička */
 .header { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
 .header__in { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.header__logo img { height: 48px; width: auto; }
-.nav { display: flex; gap: 28px; font-size: 15px; font-weight: 500; flex-wrap: wrap; }
+.header__logo { display: flex; align-items: center; gap: 10px; color: var(--ink); }
+.header__logo:hover { color: var(--ink); }
+.header__logo img { height: 48px; width: 48px; }
+.header__brand { display: flex; flex-direction: column; line-height: 1; }
+.header__brand strong { font-size: 22px; font-weight: 800; font-stretch: 112%; letter-spacing: -0.02em; white-space: nowrap; }
+.header__brand strong span { color: #2A9DB0; } /* tyrkysová z konce přechodu ve znaku */
+.header__brand small { margin-top: 4px; font-size: 13px; color: var(--muted); letter-spacing: 0.01em; }
+.nav { display: flex; gap: 28px; font-size: 15px; font-weight: 500; flex-wrap: wrap; align-items: center; }
+.nav__tel { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 @media (max-width: 760px) {
   .header__in { padding: 10px 16px; gap: 12px; flex-wrap: nowrap; }
-  .header__logo img { height: 38px; }
+  .header__logo { gap: 8px; }
+  .header__logo img { height: 36px; width: 36px; }
+  .header__brand strong { font-size: 17px; }
+  .header__logo { min-width: 0; }
+  .header__brand small { display: none; }
   .nav { gap: 0; margin-left: auto; }
   .nav a:not([href^="tel:"]) { display: none; }
+  .nav__tel { width: 38px; height: 38px; justify-content: center; border: 1.5px solid var(--ink); border-radius: 50%; }
+  .nav__tel span { display: none; }
   .header .btn--ink { padding: 9px 16px; font-size: 14px; }
 }
 
@@ -114,6 +127,14 @@ select option { color: var(--ink); }
 .product__name a:hover { color: var(--ink-hover); }
 .product__actions { display: flex; align-items: center; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
 .product__more { font-size: 15px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 420px) {
+  .header__in { gap: 8px; padding: 10px 12px; }
+  .header__logo img { height: 32px; width: 32px; }
+  .header__brand strong { font-size: 15px; letter-spacing: -0.03em; }
+  .nav__tel { width: 34px; height: 34px; }
+  .header .btn--ink { padding: 8px 12px; font-size: 13px; }
+}
+
 /* tlačítko „Více“ pro doplňky — jen na mobilu */
 .products__more { display: none; }
 
