@@ -99,10 +99,8 @@ select option { color: var(--ink); }
 .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }
 .product { background: var(--paper); border-radius: 4px; display: flex; flex-direction: column; overflow: hidden; }
 /* produktové fotky jsou na bílém pozadí — celé, bez ořezu */
-.product__img { aspect-ratio: 4 / 3; background: #fff; overflow: hidden; padding: 12px; }
-.product__img img { width: 100%; height: 100%; object-fit: contain; }
-.product__img--scene { padding: 0; }
-.product__img--scene img { object-fit: cover; }
+.product__img { aspect-ratio: 4 / 3; background: #fff; overflow: hidden; }
+.product__img img { width: 100%; height: 100%; object-fit: cover; } /* vždy přes celý box, bez pruhů */
 .product__body { padding: 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .product__cat { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .product__name { font-size: 20px; font-weight: 700; line-height: 1.2; }
@@ -123,8 +121,7 @@ select option { color: var(--ink); }
 @media (max-width: 600px) {
   .products { gap: 10px; }
   .product { display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: start; }
-  .product__img { aspect-ratio: 1; padding: 6px; margin: 12px 0 12px 12px; border-radius: 3px; }
-  .product__img--scene { padding: 0; }
+  .product__img { aspect-ratio: 1; margin: 12px 0 12px 12px; border-radius: 3px; }
   .product__body { padding: 12px 14px; gap: 2px; }
   .product__name { font-size: 17px; }
   .product__feats { display: none; }
@@ -190,7 +187,7 @@ select option { color: var(--ink); }
 .benefit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--text); }
 .others { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 12px; }
 .other { background: var(--paper); border-radius: 4px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
-.other img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #fff; border-radius: 3px; margin-bottom: 6px; }
+.other img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #fff; border-radius: 3px; margin-bottom: 6px; }
 .other span { font-weight: 700; font-size: 15px; line-height: 1.25; }
 .other small { color: var(--muted); font-size: 13px; }
 
