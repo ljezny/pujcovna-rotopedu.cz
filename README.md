@@ -13,13 +13,15 @@ Web je podle návrhu z Claude Design: ceník, doprava, pobočky, FAQ a objednáv
 
 ```
 src/                 šablony stránek: index.html, produkt.html, partials/ (head, hlavička, objednávka)
-content/produkty/    texty detailů strojů (převzaté z původního webu), 1. řádek = metadata v JSON
+src/i18n/            texty šablon cs / en / de ({{t:klíč}})
+content/produkty/    texty detailů strojů (převzaté z původního webu), 1. řádek = metadata v JSON; en/, de/ = překlady
 scripts/ai-fotky.mjs AI fotky strojů v interiéru (OpenAI, klíč OPENAI_API_KEY v .env.local)
 scripts/build.mjs    generátor: src/ + content/ + katalog → public/index.html a public/produkt/*.html
 public/              vygenerované HTML + css/styles.css, fonts/, images/
 public/js/katalog.js ceník, pobočky, výpočet ceny — sdílí web i lib/poptavka.js
 public/js/main.js    ceník, souhrn a odeslání objednávky
-public/js/consent.js GA4 + Google Ads (opt-out lišta)
+public/js/texty.js   texty formuláře a ceníku za běhu (cs / en / de)
+public/js/consent.js GA4 + Ads, GTM, 3× Meta Pixel, Seznam retargeting (opt-out lišta)
 api/poptavka.js      POST /api/poptavka (Vercel)
 lib/poptavka.js      sdílená logika: validace, šablony e-mailů, odeslání
 test/                node --test

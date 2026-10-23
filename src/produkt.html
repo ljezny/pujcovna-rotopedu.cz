@@ -4,7 +4,7 @@
 
 <main>
 <section class="detail">
-  <nav class="crumbs" aria-label="Drobečková navigace"><a href="/">Domů</a> <span>/</span> <a href="/#cenik">Ceník</a> <span>/</span> <span aria-current="page">{{name}}</span></nav>
+  <nav class="crumbs" aria-label="{{t:detail.crumbs}}"><a href="{{home}}">{{t:detail.home}}</a> <span>/</span> <a href="{{home}}#cenik">{{t:nav.pricing}}</a> <span>/</span> <span aria-current="page">{{name}}</span></nav>
 
   <div class="detail__top">
     <div class="gallery" data-gallery>
@@ -18,10 +18,10 @@
       <p class="detail__headline">{{headline}}</p>
       <ul class="product__feats detail__feats">{{feats}}</ul>
       {{prices}}
-      <p class="small">Cena v Kč za celou dobu pronájmu. Za delší pronájem vám rádi nabídneme výhodnější cenu, <a href="tel:+420774860054">ozvěte se nám</a>. Při předání se platí jen záloha, půjčovné bude odečteno ze zálohy. Doprava jedna cesta {{ship}} Kč.</p>
+      <p class="small">{{t:detail.priceNote}} {{ship}} {{t:cur}}.</p>
       <div class="hero__ctas">
-        <a href="#objednavka" class="btn btn--accent">Objednat</a>
-        <a href="tel:+420774860054" class="btn btn--outline">Zavolat 774 860 054</a>
+        <a href="#objednavka" class="btn btn--accent">{{t:nav.order}}</a>
+        <a href="tel:+420774860054" class="btn btn--outline">{{t:detail.call}} 774 860 054</a>
       </div>
     </div>
   </div>
@@ -29,10 +29,10 @@
 
 <section class="facts-wrap">
   <div class="facts">
-    <div class="fact">{{icon:truck}}<div><strong>Doprava {{ship}} Kč</strong><span>jedna cesta, výnos do patra zdarma</span></div></div>
-    <div class="fact">{{icon:wrench}}<div><strong>Složený a seřízený</strong><span>nemusíte nic montovat</span></div></div>
-    <div class="fact">{{icon:pin}}<div><strong>6 poboček</strong><span>osobní vyzvednutí po domluvě</span></div></div>
-    <div class="fact">{{icon:body}}<div><strong>Stroj na míru vaší postavě</strong><span>vybereme podle výšky a váhy</span></div></div>
+    <div class="fact">{{icon:truck}}<div><strong>{{t:detail.fShip}} {{ship}} {{t:cur}}</strong><span>{{t:detail.fShipT}}</span></div></div>
+    <div class="fact">{{icon:wrench}}<div><strong>{{t:detail.fReady}}</strong><span>{{t:detail.fReadyT}}</span></div></div>
+    <div class="fact">{{icon:pin}}<div><strong>{{t:detail.fBranches}}</strong><span>{{t:detail.fBranchesT}}</span></div></div>
+    <div class="fact">{{icon:body}}<div><strong>{{t:detail.fFit}}</strong><span>{{t:detail.fFitT}}</span></div></div>
   </div>
 </section>
 
@@ -42,17 +42,17 @@
 {{content}}
     </div>
     <aside class="benefits">
-      <h2 class="eyebrow">Výhody půjčení</h2>
-      <div class="benefit">{{icon:clock}}<div><strong>Nemusíte ztrácet čas</strong><p>cestováním do posilovny, ani čekat, až se váš oblíbený přístroj ve fitcentru uvolní. Máte ho stále k dispozici v soukromí vašeho domova.</p></div></div>
-      <div class="benefit">{{icon:star}}<div><strong>Kvalitní vybavení jen pro sebe</strong><p>Neřešíte otevírací doby, ani počasí.</p></div></div>
-      <div class="benefit">{{icon:wallet}}<div><strong>Ideální způsob, jak si vyzkoušet vlastní vůli</strong><p>dříve, než si koupíte vlastní fitness stroj. Spousta strojů končí po čase jako věšák nebo lapač prachu. Ověřte si, jak to bude u vás.</p></div></div>
+      <h2 class="eyebrow">{{t:detail.benefits}}</h2>
+      <div class="benefit">{{icon:clock}}<div><strong>{{t:detail.b1}}</strong><p>{{t:detail.b1t}}</p></div></div>
+      <div class="benefit">{{icon:star}}<div><strong>{{t:detail.b2}}</strong><p>{{t:detail.b2t}}</p></div></div>
+      <div class="benefit">{{icon:wallet}}<div><strong>{{t:detail.b3}}</strong><p>{{t:detail.b3t}}</p></div></div>
     </aside>
   </div>
 </section>
 
 <section class="tint">
   <div class="wrap stack" style="gap:24px">
-    <h2 class="h2">Další stroje</h2>
+    <h2 class="h2">{{t:detail.others}}</h2>
     <div class="others">{{others}}</div>
   </div>
 </section>

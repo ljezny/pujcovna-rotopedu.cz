@@ -118,3 +118,18 @@ test('delší doba: objednávka projde, cena „dohodou“', async () => {
   assert.equal(res.status, 200);
   assert.match(sent[0].subject, /delší doba/);
 });
+
+test('anglická objednávka: hlášky i potvrzení anglicky, provozovateli česky', async () => {
+  assert.deepEqual(validate({ ...valid(), lang: 'en', phone: '1' }), ['Please fill in your phone.']);
+  const res = await handleInquiry({ ...valid(), lang: 'en' });
+  assert.equal(res.status, 200);
+  assert.match(sent[0].text, /Rotoped magnetický, 4 týdny/);
+  assert.match(sent[0].text, /Jazyk webu: EN/);
+  assert.equal(sent[1].subject, 'Thank you for your order | Exercise Bike Rental');
+  assert.match(sent[1].text, /Magnetic exercise bike, 4 weeks: 800 CZK/);
+  assert.match(sent[1].text, /Total: 1 200 CZK/);
+});
+
+test('neznámý jazyk → čeština', () => {
+  assert.deepEqual(validate({ ...valid(), lang: 'xx', phone: '1' }), ['Vyplňte telefon.']);
+});

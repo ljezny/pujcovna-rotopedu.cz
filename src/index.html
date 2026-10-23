@@ -5,38 +5,38 @@
 <main>
 <section id="top" class="hero">
   <div class="hero__copy">
-    <div class="hero__cities">6× ČR: Brno · Jihlava · Olomouc · Ostrava · Liberec · Zlín</div>
-    <h1>Nekupujte si zbytečně další věšák!</h1>
-    <p class="hero__text">Půjčovna rotopedů a dalších fitness strojů. 7 z 10 trenažerů skončí po pár týdnech v koutě a překáží. To se vám s námi nestane. Vyzkoušíte si svou vůli a ušetříte.</p>
+    <div class="hero__cities">{{t:hero.cities}}</div>
+    <h1>{{t:hero.title}}</h1>
+    <p class="hero__text">{{t:hero.text}}</p>
     <div class="hero__ctas">
-      <a href="#objednavka" class="btn btn--accent">Objednat stroj</a>
-      <a href="#cenik" class="btn btn--outline">Zobrazit ceník</a>
+      <a href="#objednavka" class="btn btn--accent">{{t:hero.order}}</a>
+      <a href="#cenik" class="btn btn--outline">{{t:hero.pricing}}</a>
     </div>
     <div class="hero__stats">
-      <div><strong>1000+</strong><br>zákazníků v roce 2026</div>
-      <div><strong>90+</strong><br>doporučení</div>
-      <div><strong>6 měst</strong><br>výdejní sklady</div>
+      <div><strong>1000+</strong><br>{{t:hero.stat1}}</div>
+      <div><strong>90+</strong><br>{{t:hero.stat2}}</div>
+      <div><strong>{{t:hero.stat3a}}</strong><br>{{t:hero.stat3}}</div>
     </div>
   </div>
   <!-- koláž z fotek strojů v ceníku (images/stroje/*.jpg) -->
   <div class="hero__img hero__collage">
-    <a href="/produkt/rotoped-magneticky"><img src="/images/stroje/rm.jpg" alt="" width="1000" height="667" fetchpriority="high"><span>Rotoped</span></a>
-    <a href="/produkt/spinningove-kolo"><img src="/images/stroje/sk.jpg" alt="" width="1000" height="667"><span>Spinningové kolo</span></a>
-    <a href="/produkt/veslovaci-trenazer" class="hero__collage-wide"><img src="/images/stroje/vt.jpg" alt="" width="1000" height="667"><span>Veslovací trenažer</span></a>
-    <a href="/produkt/bezecky-pas-elektronicky" class="hero__collage-bp"><img src="/images/stroje/bp.jpg" alt="" width="1000" height="667"><span>Běžecký pás</span></a>
-    <a href="/produkt/elipticky-trenazer" class="hero__collage-om"><img src="/images/stroje/om.jpg" alt="" width="1000" height="667"><span>Eliptical</span></a>
+    <a href="{{lp}}/produkt/rotoped-magneticky"><img src="/images/stroje/rm.jpg" alt="" width="1000" height="667" fetchpriority="high"><span>{{t:collage.rm}}</span></a>
+    <a href="{{lp}}/produkt/spinningove-kolo"><img src="/images/stroje/sk.jpg" alt="" width="1000" height="667"><span>{{t:collage.sk}}</span></a>
+    <a href="{{lp}}/produkt/veslovaci-trenazer" class="hero__collage-wide"><img src="/images/stroje/vt.jpg" alt="" width="1000" height="667"><span>{{t:collage.vt}}</span></a>
+    <a href="{{lp}}/produkt/bezecky-pas-elektronicky" class="hero__collage-bp"><img src="/images/stroje/bp.jpg" alt="" width="1000" height="667"><span>{{t:collage.bp}}</span></a>
+    <a href="{{lp}}/produkt/elipticky-trenazer" class="hero__collage-om"><img src="/images/stroje/om.jpg" alt="" width="1000" height="667"><span>{{t:collage.om}}</span></a>
   </div>
 </section>
 
 <section id="jak" class="rule">
   <div class="wrap stack" style="gap:40px">
-    <h2 class="h2">Jak to funguje</h2>
+    <h2 class="h2">{{t:how.title}}</h2>
     <div class="steps">
-      <div class="step"><span class="step__no">01</span><h3>Vyberte si trenažer</h3><p>V ceníku najdete rotopedy, orbitreky, běžecké pásy i veslovací trenažery. Pomůžeme vybrat stroj na míru.</p></div>
-      <div class="step"><span class="step__no">02</span><h3>Pošlete objednávku</h3><p>Vyplňte formulář níže, nebo zavolejte na 774 860 054.</p></div>
-      <div class="step"><span class="step__no">03</span><h3>Probereme detaily</h3><p>Za pár hodin se vám ozveme a domluvíme termín.</p></div>
-      <div class="step"><span class="step__no">04</span><h3>Vyzvedněte nebo nechte dovézt</h3><p>Přijeďte si pro stroj, nebo vám ho dovezeme až do obýváku.</p></div>
-      <div class="step"><span class="step__no">05</span><h3>Vraťte, až vás přestane bavit</h3><p>Při předání platíte jen zálohu. Půjčovné se odečte ze zálohy.</p></div>
+      <div class="step"><span class="step__no">01</span><h3>{{t:how.s1}}</h3><p>{{t:how.s1t}}</p></div>
+      <div class="step"><span class="step__no">02</span><h3>{{t:how.s2}}</h3><p>{{t:how.s2t}}</p></div>
+      <div class="step"><span class="step__no">03</span><h3>{{t:how.s3}}</h3><p>{{t:how.s3t}}</p></div>
+      <div class="step"><span class="step__no">04</span><h3>{{t:how.s4}}</h3><p>{{t:how.s4t}}</p></div>
+      <div class="step"><span class="step__no">05</span><h3>{{t:how.s5}}</h3><p>{{t:how.s5t}}</p></div>
     </div>
   </div>
 </section>
@@ -45,32 +45,32 @@
   <div class="wrap stack" style="gap:32px">
     <div class="pricing__head">
       <div class="stack" style="gap:10px">
-        <h2 class="h2">Ceník</h2>
-        <p class="lead" style="max-width:560px">Cena za celou dobu pronájmu. Při předání se platí jen záloha, půjčovné bude odečteno ze zálohy. Ceník je platný od 1. 8. 2025.</p>
+        <h2 class="h2">{{t:pricing.title}}</h2>
+        <p class="lead" style="max-width:560px">{{t:pricing.lead}}</p>
       </div>
       <div class="durs">
-        <div class="seg" role="group" aria-label="Délka pronájmu" data-durations></div>
-        <span class="durs__note">Paddleboard: víkend (čt–po) · týden · 10 dní · 14 dní</span>
+        <div class="seg" role="group" aria-label="{{t:pricing.durationLabel}}" data-durations></div>
+        <span class="durs__note">{{t:pricing.paddleNote}}</span>
       </div>
     </div>
 
     <div class="long-note" data-long-note hidden>
-      <strong>Potřebujete stroj na delší dobu?</strong>
-      <p>Za delší pronájem vám rádi nabídneme výhodnější cenu. Zavolejte nám na <a href="tel:+420774860054">774 860 054</a>, nebo pošlete <a href="#objednavka">objednávku</a> a cenu domluvíme.</p>
+      <strong>{{t:pricing.longTitle}}</strong>
+      <p>{{t:pricing.longText}}</p>
     </div>
     <div class="products" data-products></div>
-    <button type="button" class="products__more" data-more-products aria-expanded="false">Více: Bosu, cyklotrenažer, paddleboard</button>
+    <button type="button" class="products__more" data-more-products aria-expanded="false">{{t:pricing.more}}</button>
 
     <div class="stack" style="gap:14px">
-      <span class="eyebrow">Doplňky</span>
+      <span class="eyebrow">{{t:pricing.extras}}</span>
       <div class="extras">
         <div class="extra">
-          <div class="stack" style="gap:4px"><strong>Tlumicí podložka proti hluku</strong><span>Cena podle délky pronájmu, bez zálohy</span></div>
-          <span class="extra__price" data-pad-price>100 Kč</span>
+          <div class="stack" style="gap:4px"><strong>{{t:pricing.pad}}</strong><span>{{t:pricing.padNote}}</span></div>
+          <span class="extra__price" data-pad-price>100 {{t:cur}}</span>
         </div>
         <div class="extra">
-          <div class="stack" style="gap:4px"><strong>Podložka pod rotoped</strong><span>Ochrání podlahu</span></div>
-          <span class="extra__price">100 Kč</span>
+          <div class="stack" style="gap:4px"><strong>{{t:pricing.mat}}</strong><span>{{t:pricing.matNote}}</span></div>
+          <span class="extra__price">{{t:pricing.matPrice}}</span>
         </div>
       </div>
     </div>
@@ -80,13 +80,13 @@
 <section id="doprava">
   <div class="wrap split">
     <div class="stack" style="gap:20px">
-      <h2 class="h2">Doprava</h2>
-      <p class="ship__text">Ceny dopravy po Brně, Olomouci, Ostravě, Jihlavě, Liberci a Zlíně. Trenažery dopravujeme za první uzamykatelné dveře. Na požádání vám rádi pomůžeme s výnosem do patra bez příplatku.</p>
+      <h2 class="h2">{{t:ship.title}}</h2>
+      <p class="ship__text">{{t:ship.text}}</p>
       <div class="ship__prices">
-        <div class="ship__price"><strong>300 Kč</strong><span>Rotoped, Bosu, Cyklotrenažer</span></div>
-        <div class="ship__price"><strong>400 Kč</strong><span>Vše ostatní</span></div>
+        <div class="ship__price"><strong>{{t:ship.p300}}</strong><span>{{t:ship.p300t}}</span></div>
+        <div class="ship__price"><strong>{{t:ship.p400}}</strong><span>{{t:ship.p400t}}</span></div>
       </div>
-      <span class="small">Cena za jednu cestu k vám. Pro ceny dopravy mimo uvedené oblasti nás prosím kontaktujte.</span>
+      <span class="small">{{t:ship.note}}</span>
     </div>
     <div class="zones" data-zones></div>
   </div>
@@ -95,34 +95,34 @@
 <section id="pobocky" class="tint">
   <div class="wrap stack" style="gap:32px">
     <div class="stack" style="gap:10px">
-      <h2 class="h2">Pobočky</h2>
-      <p class="lead">Osobní prohlídka strojů či osobní vyzvednutí je možné po domluvě. Nemáme stálou otevírací dobu (během dne stroje i rozvážíme), je tedy lepší předem zavolat a dohodnout se na čase vaší návštěvy.</p>
+      <h2 class="h2">{{t:branches.title}}</h2>
+      <p class="lead">{{t:branches.lead}}</p>
     </div>
     <div class="branches" data-branches></div>
   </div>
 </section>
 
-<section aria-label="Reference">
+<section aria-label="{{t:refs.title}}">
   <div class="wrap stack" style="gap:40px">
     <div class="stack" style="gap:10px">
-      <h2 class="h2">Reference</h2>
-      <p class="lead">Více jak 90 doporučení od lidí, jako vy.</p>
+      <h2 class="h2">{{t:refs.title}}</h2>
+      <p class="lead">{{t:refs.lead}}</p>
     </div>
     <div class="split">
       <figure class="quote">
-        <blockquote>„Po operaci kolene jsem potřebovala cvičit a ‚jezdit‘ na rotopedu. Pan majitel, velice slušný a milý člověk, rotoped přivezl a odvezl v přesně domluveném čase.“</blockquote>
+        <blockquote>{{t:refs.q1}}</blockquote>
         <figcaption>Ivana Tesařová</figcaption>
       </figure>
       <figure class="quote">
-        <blockquote>„Skvělá domluva, vstřícné chování, profesionální přístup, dobře připravený stroj. Zapůjčili jsme si rotoped na vyzkoušení, zda budeme denně cvičit.“</blockquote>
+        <blockquote>{{t:refs.q2}}</blockquote>
         <figcaption>Marcela Nováková</figcaption>
       </figure>
       <figure class="quote">
-        <blockquote>„Jednání vstřícné, rychlé, nekomplikované. Přístroj (magnetický rotoped) v perfektním stavu. Moje první výpůjčka, prodlužoval jsem.“</blockquote>
+        <blockquote>{{t:refs.q3}}</blockquote>
         <figcaption>Dalibor T.</figcaption>
       </figure>
       <figure class="quote">
-        <blockquote>„Super služba. Proč něco kupovat, když se to dá v době potřeby půjčit. Přístroj byl skvělý, nikde nic nevrzalo, fungoval dva měsíce na jedničku.“</blockquote>
+        <blockquote>{{t:refs.q4}}</blockquote>
         <figcaption>Jan Kapoun</figcaption>
       </figure>
     </div>
@@ -131,29 +131,29 @@
 
 <section id="o-nas" class="tint">
   <div class="wrap split">
-    <h2 class="h2">Jak nás to napadlo?</h2>
+    <h2 class="h2">{{t:story.title}}</h2>
     <div class="story">
-      <p>Nápad půjčovat rotopedy, fitness stroje a rehabilitační pomůcky jsem dostal po vlastním úrazu kolena a následných operacích. Z první rehabilitace jsem odcházel odhodlaný rychle si sehnat všechny doporučené nástroje a sportovní potřeby. Nadšení zmizelo po zjištění, kolik všechny ty užitečné věci stojí. Obzvlášť, když některé jsou k rehabilitaci potřeba maximálně na několik týdnů.</p>
-      <p>Půjčovna je cestou, jak tento problém řešit. Zákazník tak má k dispozici kvalitní vybavení a platí jen za dobu, kterou opravdu potřebuje. Nemusí se mačkat se zpocenými lidmi v posilovně a hlavně se mu doma nehromadí nepoužívané „harampádí“ (kdo by neznal rotoped jako věčně překážející věšák na oblečení). To vše levněji, než stojí průměrná permanentka do fitcentra.</p>
-      <p>Naše rotopedy a trenažery pochopitelně nejsou určeny jen pacientům po operacích. Půjčovna je dostupná všem, kteří chtějí cvičit na kvalitním stroji v pohodlí domova. Vůbec nezáleží na tom, zda si chcete vyzkoušet svou vůli (než koupíte trenažer za tisíce), chcete se raději namáhat v soukromí, nebo se vám jen nechce přetahovat o nářadí v posilovně.</p>
-      <p class="story__sign">Ondřej Bena, zakladatel půjčovny</p>
+      <p>{{t:story.p1}}</p>
+      <p>{{t:story.p2}}</p>
+      <p>{{t:story.p3}}</p>
+      <p class="story__sign">{{t:story.sign}}</p>
     </div>
   </div>
 </section>
 
 <section id="faq" class="rule">
   <div class="wrap faq">
-    <h2 class="h2">Časté dotazy</h2>
+    <h2 class="h2">{{t:faq.title}}</h2>
     <div class="faq__list">
-      <details open><summary>Kolik zaplatím při převzetí?</summary><p>Při předání se platí jen záloha. Půjčovné bude odečteno ze zálohy a zbytek vám vrátíme.</p></details>
-      <details><summary>Vynesete stroj do patra?</summary><p>Trenažery dopravujeme za první uzamykatelné dveře. Na požádání vám rádi pomůžeme s výnosem do patra bez příplatku. Stroj dodáme složený a seřízený.</p></details>
-      <details><summary>Odvezu si stroj sám autem?</summary><p>Rotoped se vejde do běžného osobního auta se sklopenými zadními sedadly, u běžeckého pásu většinou stačí auto typu kombi. S naložením vám pomůžeme. Pokud si nejste jistí, zavolejte nám, poradíme.</p></details>
-      <details><summary>Kdy si můžu stroj vyzvednout?</summary><p>Nemáme stálou otevírací dobu, během dne stroje i rozvážíme. Je tedy lepší předem zavolat a dohodnout se na čase vaší návštěvy.</p></details>
-      <details><summary>Hodí se rotoped na rehabilitaci?</summary><p>Ano. Magnetický rotoped je stabilní, šetrný ke kloubům a má tichý chod. Elektronický rotoped umožňuje přesnou kontrolu zátěže, takže je ideální pro řízenou rehabilitaci.</p></details>
-      <details><summary>Můžu pronájem prodloužit?</summary><p>Ano, stačí se nám ozvat a prodloužení domluvíme.</p></details>
-      <details><summary>Nabízíte dárkové poukazy?</summary><p>Ano, dva druhy. Můžete svým blízkým předplatit pronájem konkrétního stroje nebo paddleboardu dle ceníku (poukázka je bez částky, jak se na dárek sluší), nebo koupit finanční kredit, ať má obdarovaný volnou ruku. Poukázku vám zdarma pošleme e-mailem, nebo si ji u nás vyzvednete. Objednávejte telefonicky nebo přes formulář.</p></details>
-      <details><summary>Kde najdu víc o paddleboardech?</summary><p>Pro více informací o paddleboardech doporučujeme naši druhou stránku <a href="https://www.paddleboardbrno.cz" target="_blank" rel="noopener">www.paddleboardbrno.cz</a>.</p></details>
-      <details><summary>Dovezete i mimo uvedená města?</summary><p>Pro ceny dopravy mimo uvedené oblasti nás kontaktujte na <a href="tel:+420774860054">+420 774 860 054</a>.</p></details>
+      <details open><summary>{{t:faq.q1}}</summary><p>{{t:faq.a1}}</p></details>
+      <details><summary>{{t:faq.q2}}</summary><p>{{t:faq.a2}}</p></details>
+      <details><summary>{{t:faq.q3}}</summary><p>{{t:faq.a3}}</p></details>
+      <details><summary>{{t:faq.q4}}</summary><p>{{t:faq.a4}}</p></details>
+      <details><summary>{{t:faq.q5}}</summary><p>{{t:faq.a5}}</p></details>
+      <details><summary>{{t:faq.q6}}</summary><p>{{t:faq.a6}}</p></details>
+      <details><summary>{{t:faq.q7}}</summary><p>{{t:faq.a7}}</p></details>
+      <details><summary>{{t:faq.q8}}</summary><p>{{t:faq.a8}}</p></details>
+      <details><summary>{{t:faq.q9}}</summary><p>{{t:faq.a9}}</p></details>
     </div>
   </div>
 </section>

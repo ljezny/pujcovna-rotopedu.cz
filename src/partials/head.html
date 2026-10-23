@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="{{lang}}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,6 +8,8 @@
   <title>{{title}}</title>
   <meta name="description" content="{{description}}">
   <link rel="canonical" href="https://www.pujcovna-rotopedu.cz{{path}}">
+{{alternates}}
+  <meta name="facebook-domain-verification" content="47b0d12k51bmc1o5etfkvzlqolzhcu">
   <meta name="theme-color" content="#0A3A78">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -15,7 +17,7 @@
   <link rel="stylesheet" href="/css/styles.css?v={{version}}">
   <script src="/js/consent.js?v={{version}}"></script>
   <!-- moduly importované z main.js taky s verzí, ať prohlížeč nedrží starý katalog -->
-  <script type="importmap">{"imports": {"/js/katalog.js": "/js/katalog.js?v={{version}}", "/js/obrazky.js": "/js/obrazky.js?v={{version}}"}}</script>
+  <script type="importmap">{"imports": {"/js/katalog.js": "/js/katalog.js?v={{version}}", "/js/obrazky.js": "/js/obrazky.js?v={{version}}", "/js/texty.js": "/js/texty.js?v={{version}}"}}</script>
   <script type="module" src="/js/main.js?v={{version}}"></script>
 </head>
 <body>

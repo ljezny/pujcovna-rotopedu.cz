@@ -63,6 +63,13 @@ select option { color: var(--ink); }
 .header__brand strong span { color: #2A9DB0; } /* tyrkysová z konce přechodu ve znaku */
 .header__brand small { margin-top: 4px; font-size: 13px; color: var(--muted); letter-spacing: 0.01em; }
 .nav { display: flex; gap: 28px; font-size: 15px; font-weight: 500; flex-wrap: wrap; align-items: center; }
+/* přepínač jazyků */
+.langs { display: flex; gap: 2px; font-size: 13px; font-weight: 600; }
+.langs a { padding: 4px 7px; border-radius: 4px; color: var(--muted); }
+.langs a:hover { color: var(--ink); }
+.langs a[aria-current="true"] { color: var(--ink); background: var(--tint); }
+.langs--footer a { color: var(--dark-muted); }
+.langs--footer a[aria-current="true"] { color: var(--paper); background: var(--dark-field); }
 .nav__tel { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 @media (max-width: 760px) {
   .header__in { padding: 10px 16px; gap: 12px; flex-wrap: nowrap; }
@@ -73,6 +80,7 @@ select option { color: var(--ink); }
   .header__brand small { display: none; }
   .nav { gap: 0; margin-left: auto; }
   .nav a:not([href^="tel:"]) { display: none; }
+  .header .langs { display: none; } /* na mobilu je přepínač v patičce */
   .nav__tel { width: 38px; height: 38px; justify-content: center; border: 1.5px solid var(--ink); border-radius: 50%; }
   .nav__tel span { display: none; }
   .header .btn--ink { padding: 9px 16px; font-size: 14px; }
@@ -199,10 +207,10 @@ select option { color: var(--ink); }
 /* ceny na detailu: dlaždice délek pronájmu */
 .prices { display: flex; flex-direction: column; gap: 8px; }
 .prices__name { font-weight: 700; font-size: 16px; }
-.prices__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+.prices__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 8px; }
 .price { background: #fff; border: 1px solid var(--line-2); border-radius: 6px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; font-variant-numeric: tabular-nums; }
 .price span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.price strong { font-size: 20px; font-weight: 800; white-space: nowrap; }
+.price strong { font-size: 19px; font-weight: 800; white-space: nowrap; }
 .price--best { position: relative; background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .price--best span { color: var(--dark-muted); }
 .price--best em { position: absolute; top: -9px; left: 10px; background: var(--accent); color: var(--ink); font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }

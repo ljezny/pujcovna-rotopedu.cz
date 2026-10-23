@@ -88,9 +88,86 @@ export const ZONES = [
   { city: 'Zlín', area: 'Zlín, Otrokovice, Napajedla, Bohuslavice u Zlína, Lípa, Fryšták, Mysločovice' }
 ];
 
-export function durationLabel(product, i) {
-  if (i === LONG) return 'delší doba';
-  return (product && product.paddle ? PADDLE_DURATIONS : DURATIONS)[i];
+// ---------- překlady (cs je výchozí v datech výše) ----------
+
+export const LANGS = ['cs', 'en', 'de'];
+
+const TR = {
+  en: {
+    durations: ['2 weeks', '4 weeks', '6 weeks', '8 weeks'],
+    paddle: ['weekend (Thu–Mon)', 'week', '10 days', '14 days'],
+    long: 'Longer period', longLower: 'longer period', onRequest: 'on request', cur: 'CZK',
+    products: {
+      rm: { cat: 'Exercise bikes & bike trainers', name: 'Magnetic exercise bike', feats: ['Suitable for rehabilitation – stable and gentle on the joints', 'Quiet – won’t disturb the neighbours or your TV', 'No power socket needed – place it anywhere', 'Delivered assembled and adjusted – no assembly needed'] },
+      re: { cat: 'Exercise bikes & bike trainers', name: 'Electronic exercise bike', feats: ['Training programmes – automatic resistance for weight loss and fitness', 'Precise resistance control – ideal for guided rehabilitation', 'Maximum comfort – quiet, clear display and push-button control', 'Delivered assembled and ready – just plug it in'] },
+      bp: { cat: 'Treadmills', name: 'Electric treadmill', feats: ['Stable – min. 120 kg load capacity, 40+ cm running surface', 'Folding frame – saves space after training', 'Delivered assembled and adjusted – no assembly needed', 'Delivery available – carried right into your flat'] },
+      vt: { cat: 'Rowing machines', name: 'Rowing machine', feats: ['Full-body workout – legs, back, arms and core', 'Folding frame – easy to fold away after training', 'Delivered assembled and adjusted – no assembly needed', 'Easy to handle – fits in a car and in any room'] },
+      sk: { cat: 'Exercise bikes & bike trainers', name: 'Spinning bike', feats: ['Very stable – solid frame even when riding standing up', 'Heavy flywheel – smooth ride even at high resistance', 'Fully adjustable – saddle and handlebars set in seconds', 'No assembly – delivered assembled and adjusted'] },
+      om: { cat: 'Cross trainers', name: 'Magnetic cross trainer (elliptical)', feats: ['Effective training – high energy burn that helps you lose fat', 'Full-body workout – legs, glutes, arms and core', 'Quiet – smooth motion that won’t disturb the household', 'Transport wheels – easy to move after training'] },
+      oe: { cat: 'Cross trainers', name: 'Electronic cross trainer (elliptical)', feats: ['Effective training – high energy burn that helps you lose fat', 'Full-body workout – legs, glutes, arms and core', 'Smooth motion – no hard impact like when running', 'Transport wheels – easy to move after training'] },
+      bo: { cat: 'Bosu', name: 'Bosu', feats: ['Improves body stability and balance', 'Strengthens the deep stabilising muscles', 'Originally an aid for rehabilitation centres', 'At home or in the office – e.g. to prevent back pain'] },
+      ct: { cat: 'Exercise bikes & bike trainers', name: 'Bike trainer', feats: ['Train on your own bike – no getting used to a different position', 'Smooth shifting – use your own derailleur just like outdoors', 'Compact – easy to put away after training', 'Easy to transport – fits in any car'] },
+      pb: { cat: 'Paddleboards', name: 'Paddleboard incl. paddle and pump', feats: ['Inflatable – pump, paddle and backpack included', 'Packed weight approx. 15 kg – you can even take it on the tram', 'Works the whole body and improves balance', 'Easy to learn for you and your kids'] }
+    },
+    cityNotes: {
+      Brno: 'Courtyard parking – careful, narrow entrance',
+      Olomouc: 'Former Akuma site, opposite the silo, side entrance',
+      Ostrava: 'Jelínek site, opposite Svinov railway station',
+      Jihlava: 'Stavby Zelený site',
+      Liberec: 'Luna shopping centre',
+      Zlín: 'Zliner site'
+    }
+  },
+  de: {
+    durations: ['2 Wochen', '4 Wochen', '6 Wochen', '8 Wochen'],
+    paddle: ['Wochenende (Do–Mo)', 'Woche', '10 Tage', '14 Tage'],
+    long: 'Längere Dauer', longLower: 'längere Dauer', onRequest: 'auf Anfrage', cur: 'CZK',
+    products: {
+      rm: { cat: 'Heimtrainer & Rollentrainer', name: 'Magnet-Heimtrainer', feats: ['Für die Reha geeignet – stabil und gelenkschonend', 'Leise – stört weder Nachbarn noch Fernsehen', 'Kein Stromanschluss nötig – überall aufstellbar', 'Montiert und eingestellt geliefert – kein Aufbau nötig'] },
+      re: { cat: 'Heimtrainer & Rollentrainer', name: 'Elektronischer Heimtrainer', feats: ['Trainingsprogramme – automatischer Widerstand zum Abnehmen und für die Kondition', 'Genaue Widerstandssteuerung – ideal für eine gezielte Reha', 'Maximaler Komfort – leise, übersichtliches Display, Tastenbedienung', 'Montiert und startklar geliefert – einfach einstecken'] },
+      bp: { cat: 'Laufbänder', name: 'Elektrisches Laufband', feats: ['Stabil – Belastbarkeit mind. 120 kg, Lauffläche 40+ cm', 'Klappbar – spart nach dem Training Platz', 'Montiert und eingestellt geliefert – kein Aufbau nötig', 'Lieferung möglich – bis in die Wohnung getragen'] },
+      vt: { cat: 'Rudergeräte', name: 'Rudergerät', feats: ['Ganzkörpertraining – Beine, Rücken, Arme und Bauch', 'Klappbar – nach dem Training einfach zusammenklappen', 'Montiert und eingestellt geliefert – kein Aufbau nötig', 'Leicht zu handhaben – passt ins Auto und in jedes Zimmer'] },
+      sk: { cat: 'Heimtrainer & Rollentrainer', name: 'Spinning-Bike', feats: ['Sehr stabil – fester Rahmen auch im Wiegetritt', 'Schweres Schwungrad – ruhiger Lauf auch bei hohem Widerstand', 'Individuell einstellbar – Sattel und Lenker in Sekunden', 'Kein Aufbau – montiert und eingestellt geliefert'] },
+      om: { cat: 'Crosstrainer', name: 'Magnet-Crosstrainer (Ellipsentrainer)', feats: ['Effektives Training – hoher Kalorienverbrauch, unterstützt die Fettverbrennung', 'Ganzkörpertraining – Beine, Po, Arme und Bauch', 'Leise – fließende Bewegung, die niemanden stört', 'Transportrollen – nach dem Training leicht zu verschieben'] },
+      oe: { cat: 'Crosstrainer', name: 'Elektronischer Crosstrainer (Ellipsentrainer)', feats: ['Effektives Training – hoher Kalorienverbrauch, unterstützt die Fettverbrennung', 'Ganzkörpertraining – Beine, Po, Arme und Bauch', 'Fließende Bewegung – keine harten Stöße wie beim Laufen', 'Transportrollen – nach dem Training leicht zu verschieben'] },
+      bo: { cat: 'Bosu', name: 'Bosu', feats: ['Verbessert Stabilität und Gleichgewicht', 'Stärkt die tiefe Stabilisationsmuskulatur', 'Ursprünglich ein Hilfsmittel für Reha-Zentren', 'Zu Hause oder im Büro – z. B. gegen Rückenschmerzen'] },
+      ct: { cat: 'Heimtrainer & Rollentrainer', name: 'Rollentrainer', feats: ['Training auf dem eigenen Rad – keine Umgewöhnung an eine andere Sitzposition', 'Fließendes Schalten – mit Ihrer eigenen Schaltung wie draußen', 'Kompakt – nach dem Training schnell verstaut', 'Leicht zu transportieren – passt in jedes Auto'] },
+      pb: { cat: 'Paddleboards', name: 'Paddleboard inkl. Paddel und Pumpe', feats: ['Aufblasbar – Pumpe, Paddel und Rucksack inklusive', 'Verpackt ca. 15 kg – passt sogar in die Straßenbahn', 'Trainiert den ganzen Körper und das Gleichgewicht', 'Leicht zu lernen – für Sie und Ihre Kinder'] }
+    },
+    cityNotes: {
+      Brno: 'Parken im Hof – Vorsicht, enge Einfahrt',
+      Olomouc: 'Ehemaliges Akuma-Gelände, gegenüber dem Silo, Eingang seitlich',
+      Ostrava: 'Gelände Jelínek, gegenüber dem Bahnhof Svinov',
+      Jihlava: 'Gelände Stavby Zelený',
+      Liberec: 'Einkaufszentrum Luna',
+      Zlín: 'Gelände Zliner'
+    }
+  }
+};
+
+const tr = (lang) => TR[lang] || null;
+
+/** Stroj s přeloženým názvem, kategorií a výhodami (cs = beze změny). */
+export function localize(product, lang = 'cs') {
+  const t = tr(lang)?.products[product.id];
+  return t ? { ...product, ...t } : product;
+}
+
+export function cityNote(city, lang = 'cs') {
+  return tr(lang)?.cityNotes[city.name] || city.note;
+}
+
+export function durationNames(lang = 'cs', paddle = false) {
+  const t = tr(lang);
+  if (paddle) return t ? t.paddle : PADDLE_DURATIONS;
+  return t ? t.durations : DURATIONS;
+}
+
+export const longLabel = (lang = 'cs') => tr(lang)?.long || LONG_LABEL;
+
+export function durationLabel(product, i, lang = 'cs') {
+  if (i === LONG) return tr(lang)?.longLower || 'delší doba';
+  return durationNames(lang, product && product.paddle)[i];
 }
 
 export const isDuration = (i) => Number.isInteger(i) && i >= 0 && i <= LONG;
@@ -108,5 +185,5 @@ export function priceOrder({ product, duration, delivery, pad, mat }) {
 }
 
 export const fmt = (n) => n.toLocaleString('cs-CZ').replace(/ /g, ' ');
-/** cena s „Kč“, null → „dohodou“ */
-export const fmtPrice = (n) => (n === null ? 'dohodou' : `${fmt(n)} Kč`);
+/** cena s měnou („Kč“, v cizích jazycích „CZK“), null → „dohodou“ */
+export const fmtPrice = (n, lang = 'cs') => (n === null ? (tr(lang)?.onRequest || 'dohodou') : `${fmt(n)} ${tr(lang)?.cur || 'Kč'}`);

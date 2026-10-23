@@ -1,60 +1,60 @@
 <section id="objednavka" class="order">
   <div class="order__in">
     <div class="stack" style="gap:20px">
-      <h2>Objednávka</h2>
-      <p class="order__text">Vyplňte formulář, za pár hodin se vám ozveme a probereme detaily. Nebo volejte rovnou.</p>
+      <h2>{{t:order.title}}</h2>
+      <p class="order__text">{{t:order.text}}</p>
       <div class="order__contact">
         <a href="tel:+420774860054">+420 774 860 054</a>
         <a href="mailto:rezervace@pujcovna-rotopedu.cz">rezervace@pujcovna-rotopedu.cz</a>
       </div>
       <div class="summary" aria-live="polite">
-        <span class="eyebrow">Souhrn</span>
-        <div class="summary__row"><span data-sum="label">Vyberte stroj · 4 týdny</span><span data-sum="rent">0 Kč</span></div>
-        <div class="summary__row" data-sum-row="pad" hidden><span>Tlumicí podložka</span><span data-sum="pad">0 Kč</span></div>
-        <div class="summary__row" data-sum-row="mat" hidden><span>Podložka pod rotoped</span><span data-sum="mat">0 Kč</span></div>
-        <div class="summary__row" data-sum-row="ship" hidden><span>Doprava k vám</span><span data-sum="ship">0 Kč</span></div>
-        <div class="summary__row summary__total"><span>Celkem</span><span data-sum="total">0 Kč</span></div>
-        <div class="summary__row summary__dep"><span>Vratná záloha při předání</span><span data-sum="dep">–</span></div>
+        <span class="eyebrow">{{t:order.summary}}</span>
+        <div class="summary__row"><span data-sum="label">{{t:order.pick}}</span><span data-sum="rent">0 {{t:cur}}</span></div>
+        <div class="summary__row" data-sum-row="pad" hidden><span>{{t:order.sumPad}}</span><span data-sum="pad">0 {{t:cur}}</span></div>
+        <div class="summary__row" data-sum-row="mat" hidden><span>{{t:order.sumMat}}</span><span data-sum="mat">0 {{t:cur}}</span></div>
+        <div class="summary__row" data-sum-row="ship" hidden><span>{{t:order.sumShip}}</span><span data-sum="ship">0 {{t:cur}}</span></div>
+        <div class="summary__row summary__total"><span>{{t:order.total}}</span><span data-sum="total">0 {{t:cur}}</span></div>
+        <div class="summary__row summary__dep"><span>{{t:order.deposit}}</span><span data-sum="dep">–</span></div>
       </div>
     </div>
 
     <div>
       <form class="form" id="order-form" novalidate{{preselect}}>
         <label class="field full">
-          <span>Stroj *</span>
+          <span>{{t:order.machine}} *</span>
           <select class="input" name="product" required data-product-select>
-            <option value="">Vyberte stroj…</option>
+            <option value="">{{t:order.machinePick}}</option>
           </select>
         </label>
         <fieldset class="field full">
-          <legend>Délka pronájmu</legend>
+          <legend>{{t:order.duration}}</legend>
           <div class="choices choices--5" data-form-durations></div>
         </fieldset>
         <label class="field">
-          <span>Město *</span>
+          <span>{{t:order.city}} *</span>
           <select class="input" name="city" required data-city-select></select>
         </label>
         <label class="field">
-          <span>Od kdy</span>
+          <span>{{t:order.date}}</span>
           <input class="input" type="date" name="date" data-date>
         </label>
         <fieldset class="field full">
-          <legend>Předání</legend>
+          <legend>{{t:order.handover}}</legend>
           <div class="choices choices--2">
-            <button type="button" class="choice" data-mode="pickup" aria-pressed="true">Vyzvednu na pobočce</button>
-            <button type="button" class="choice" data-mode="delivery" aria-pressed="false">Dovézt domů</button>
+            <button type="button" class="choice" data-mode="pickup" aria-pressed="true">{{t:order.pickup}}</button>
+            <button type="button" class="choice" data-mode="delivery" aria-pressed="false">{{t:order.delivery}}</button>
           </div>
         </fieldset>
         <label class="field full" data-address hidden>
-          <span>Adresa doručení *</span>
-          <input class="input" name="address" placeholder="Ulice, číslo, město, patro" autocomplete="street-address">
+          <span>{{t:order.address}} *</span>
+          <input class="input" name="address" placeholder="{{t:order.addressPh}}" autocomplete="street-address">
         </label>
         <label class="field full">
-          <span>Jméno a příjmení *</span>
+          <span>{{t:order.name}} *</span>
           <input class="input" name="name" required autocomplete="name">
         </label>
         <label class="field">
-          <span>Telefon *</span>
+          <span>{{t:order.phone}} *</span>
           <input class="input" type="tel" name="phone" required placeholder="+420" autocomplete="tel">
         </label>
         <label class="field">
@@ -62,32 +62,32 @@
           <input class="input" type="email" name="email" autocomplete="email">
         </label>
         <label class="field full">
-          <span>Poznámka</span>
-          <textarea class="input" name="note" rows="3" placeholder="Např. výnos do 3. patra bez výtahu, rehabilitace po operaci kolena…"></textarea>
+          <span>{{t:order.note}}</span>
+          <textarea class="input" name="note" rows="3" placeholder="{{t:order.notePh}}"></textarea>
         </label>
         <div class="checks full">
-          <label class="check"><input type="checkbox" name="pad"> <span>Tlumicí podložka proti hluku (<span data-pad-price>100 Kč</span>)</span></label>
-          <label class="check"><input type="checkbox" name="mat"> <span>Podložka pod rotoped (100 Kč)</span></label>
+          <label class="check"><input type="checkbox" name="pad"> <span>{{t:order.pad}} (<span data-pad-price>100 {{t:cur}}</span>)</span></label>
+          <label class="check"><input type="checkbox" name="mat"> <span>{{t:order.mat}}</span></label>
         </div>
         <!-- honeypot -->
         <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form__error full" role="alert" data-error hidden></div>
-        <button type="submit" class="btn btn--accent full">Odeslat objednávku</button>
-        <p class="form__note full">Odesláním souhlasíte se zpracováním osobních údajů za účelem vyřízení objednávky.</p>
+        <button type="submit" class="btn btn--accent full">{{t:order.submit}}</button>
+        <p class="form__note full">{{t:order.gdpr}}</p>
       </form>
 
       <div class="thanks" data-thanks hidden>
-        <strong>Děkujeme, <span data-thanks-name></span>.</strong>
-        <p>Objednávku jsme přijali. Za pár hodin vám zavoláme na <span data-thanks-phone></span> a domluvíme předání.</p>
-        <button type="button" data-reset>Nová objednávka</button>
+        <strong>{{t:order.thanks}}, <span data-thanks-name></span>.</strong>
+        <p>{{t:order.thanksText}}</p>
+        <button type="button" data-reset>{{t:order.reset}}</button>
       </div>
     </div>
   </div>
 
   <footer class="footer">
     <div class="footer__in">
-      <span class="footer__brand"><span class="footer__mark"><img src="/images/logo-znak.jpg" alt="" width="26" height="26"></span>Půjčovna rotopedů JV s.r.o. · IČ 223013372 · Táborská 4488/123, Brno</span>
-      <span class="footer__links"><a href="#" data-cookie-settings>Měření návštěvnosti</a><span>© 2026 pujcovna-rotopedu.cz</span></span>
+      <span class="footer__brand"><span class="footer__mark"><img src="/images/logo-znak.jpg" alt="" width="26" height="26"></span>Půjčovna rotopedů JV s.r.o. · {{t:footer.id}} 223013372 · Táborská 4488/123, Brno</span>
+      <span class="footer__links"><span class="langs langs--footer">{{langs}}</span><a href="#" data-cookie-settings>{{t:footer.cookies}}</a><span>© 2026 pujcovna-rotopedu.cz</span></span>
     </div>
   </footer>
 </section>

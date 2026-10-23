@@ -1,10 +1,16 @@
 /* Půjčovna rotopedů — ceník, souhrn a objednávkový formulář.
    Běží na úvodní stránce i na detailech strojů (public/produkt/*) — sekce, které stránka nemá, se přeskočí. */
 import {
-  DURATIONS, DEFAULT_DURATION, LONG, LONG_LABEL, PRODUCTS, PAD_PRICES, CITIES, ZONES,
-  durationLabel, priceOrder, fmt, fmtPrice
+  DEFAULT_DURATION, LONG, PRODUCTS as BASE_PRODUCTS, PAD_PRICES, CITIES, ZONES,
+  durationLabel, durationNames, longLabel, localize, cityNote, priceOrder, fmtPrice as fmtPriceIn
 } from './katalog.js';
 import { obrazek } from './obrazky.js';
+import { LANG, T, LP } from './texty.js';
+
+// stroje v jazyce stránky (název, kategorie, výhody)
+const PRODUCTS = BASE_PRODUCTS.map((p) => localize(p, LANG));
+const fmtPrice = (n) => fmtPriceIn(n, LANG);
+const DURATION_NAMES = durationNames(LANG);
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -18,16 +24,16 @@ const fill = (sel, html) => { const el = $(sel); if (el) el.innerHTML = html; };
 
 fill('[data-products]', PRODUCTS.map((p) => `
   <article class="product${p.extra ? ' product--extra' : ''}">
-    <a href="/produkt/${p.slug}" class="product__img${p.scene ? ' product__img--scene' : ''}"><img src="${obrazek(`stroje/${p.img || p.id}.jpg`)}" alt="${esc(p.name)}" loading="lazy" width="700" height="700"></a>
+    <a href="${LP}/produkt/${p.slug}" class="product__img${p.scene ? ' product__img--scene' : ''}"><img src="${obrazek(`stroje/${p.img || p.id}.jpg`)}" alt="${esc(p.name)}" loading="lazy" width="700" height="700"></a>
     <div class="product__body">
       <span class="product__cat">${esc(p.cat)}</span>
-      <h3 class="product__name" style="margin:0"><a href="/produkt/${p.slug}">${esc(p.name)}</a></h3>
+      <h3 class="product__name" style="margin:0"><a href="${LP}/produkt/${p.slug}">${esc(p.name)}</a></h3>
       <ul class="product__feats">${p.feats.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>
       <div class="product__price"><strong data-price="${p.id}"></strong><span data-per="${p.id}"></span></div>
-      <span class="product__dep">Vratná záloha ${fmt(p.dep)} Kč</span>
+      <span class="product__dep">${T.deposit} ${fmtPrice(p.dep)}</span>
       <div class="product__actions">
-        <button type="button" class="btn btn--outline btn--sm" data-pick="${p.id}">Objednat</button>
-        <a href="/produkt/${p.slug}" class="product__more">Více informací</a>
+        <button type="button" class="btn btn--outline btn--sm" data-pick="${p.id}">${T.order}</button>
+        <a href="${LP}/produkt/${p.slug}" class="product__more">${T.more}</a>
       </div>
     </div>
   </article>`).join(''));
@@ -35,15 +41,15 @@ fill('[data-products]', PRODUCTS.map((p) => `
 fill('[data-zones]', ZONES.map((z) => `<div class="zone"><strong>${esc(z.city)}</strong><span>${esc(z.area)}</span></div>`).join(''));
 
 fill('[data-branches]', CITIES.map((c) => `
-  <div class="branch"><strong>${esc(c.name)}</strong><span>${esc(c.addr)}</span><small>${esc(c.note)}</small>
+  <div class="branch"><strong>${esc(c.name)}</strong><span>${esc(c.addr)}</span><small>${esc(cityNote(c, LANG))}</small>
     <a class="branch__tel" href="tel:${c.phone.replace(/\s+/g, '')}">${esc(c.phone)}</a></div>`).join(''));
 
 $('[data-product-select]').insertAdjacentHTML('beforeend',
   PRODUCTS.map((p) => `<option value="${p.id}">${esc(p.name)}</option>`).join(''));
 $('[data-city-select]').innerHTML = CITIES.map((c) => `<option>${esc(c.name)}</option>`).join('');
 
-fill('[data-durations]', [...DURATIONS, LONG_LABEL].map((d, i) => `<button type="button" data-dur="${i}">${d}</button>`).join(''));
-$('[data-form-durations]').innerHTML = [...DURATIONS, LONG_LABEL].map((_, i) => `<button type="button" class="choice" data-dur="${i}"></button>`).join('');
+fill('[data-durations]', [...DURATION_NAMES, longLabel(LANG)].map((d, i) => `<button type="button" data-dur="${i}">${d}</button>`).join(''));
+$('[data-form-durations]').innerHTML = [...DURATION_NAMES, longLabel(LANG)].map((_, i) => `<button type="button" class="choice" data-dur="${i}"></button>`).join('');
 
 $('[data-date]').min = new Date().toISOString().slice(0, 10);
 
@@ -52,7 +58,7 @@ if (form.dataset.preselect) form.product.value = form.dataset.preselect;
 
 // detail stroje: text tlačítka „další informace“ podle stavu
 $$('details.more').forEach((d) => d.addEventListener('toggle', () => {
-  $('[data-more-label]', d).textContent = d.open ? 'Skrýt další informace' : 'Zobrazit další informace';
+  $('[data-more-label]', d).textContent = d.open ? T.hideMore : T.showMore;
 }));
 
 // ---------- překreslení podle stavu ----------
@@ -68,7 +74,7 @@ function render() {
   $$('[data-dur]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.dur) === d)));
   $$('[data-form-durations] [data-dur]').forEach((b) => {
     const i = Number(b.dataset.dur);
-    b.textContent = i === LONG ? LONG_LABEL : durationLabel(sel, i);
+    b.textContent = i === LONG ? longLabel(LANG) : durationLabel(sel, i, LANG);
   });
 
   const long = d === LONG;
@@ -77,8 +83,8 @@ function render() {
   PRODUCTS.forEach((p) => {
     const price = $(`[data-price="${p.id}"]`);
     if (!price) return;
-    price.textContent = long ? 'Cena dohodou' : `${fmt(p.p[d])} Kč`;
-    $(`[data-per="${p.id}"]`).textContent = long ? '' : `za ${durationLabel(p, d)}`;
+    price.textContent = long ? T.onRequest : fmtPrice(p.p[d]);
+    $(`[data-per="${p.id}"]`).textContent = long ? '' : `${T.per} ${durationLabel(p, d, LANG)}`;
   });
   $$('[data-pad-price]').forEach((el) => { el.textContent = fmtPrice(long ? null : PAD_PRICES[d]); });
 
@@ -89,7 +95,7 @@ function render() {
     product: form.product.value, duration: d, delivery: state.mode === 'delivery',
     pad: form.pad.checked, mat: form.mat.checked
   });
-  $('[data-sum="label"]').textContent = sel ? `${sel.name}, ${durationLabel(sel, d)}` : `Vyberte stroj · ${long ? LONG_LABEL.toLowerCase() : DURATIONS[d]}`;
+  $('[data-sum="label"]').textContent = sel ? `${sel.name}, ${durationLabel(sel, d, LANG)}` : `${T.pick} · ${durationLabel(null, d, LANG)}`;
   $('[data-sum="rent"]').textContent = fmtPrice(sum.rent);
   $('[data-sum="pad"]').textContent = fmtPrice(sum.pad);
   $('[data-sum="mat"]').textContent = fmtPrice(sum.mat);
@@ -146,10 +152,10 @@ form.addEventListener('change', render);
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const f = form.elements;
-  if (!f.product.value) return showError('Vyberte prosím stroj.');
-  if (!f.name.value.trim() || !f.phone.value.trim()) return showError('Vyplňte prosím jméno a telefon.');
-  if (state.mode === 'delivery' && !f.address.value.trim()) return showError('Vyplňte prosím adresu doručení.');
-  if (f.email.value.trim() && !f.email.checkValidity()) return showError('Zkontrolujte prosím e-mail.');
+  if (!f.product.value) return showError(T.errProduct);
+  if (!f.name.value.trim() || !f.phone.value.trim()) return showError(T.errNamePhone);
+  if (state.mode === 'delivery' && !f.address.value.trim()) return showError(T.errAddress);
+  if (f.email.value.trim() && !f.email.checkValidity()) return showError(T.errEmail);
 
   const data = {
     product: f.product.value,
@@ -164,12 +170,13 @@ form.addEventListener('submit', async (e) => {
     note: f.note.value,
     pad: f.pad.checked,
     mat: f.mat.checked,
-    website: f.website.value
+    website: f.website.value,
+    lang: LANG
   };
 
   const btn = form.querySelector('button[type=submit]');
   btn.disabled = true;
-  btn.textContent = 'Odesílám…';
+  btn.textContent = T.sending;
   try {
     const res = await fetch('/api/poptavka', {
       method: 'POST',
@@ -177,10 +184,10 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify(data)
     });
     const body = await res.json().catch(() => ({}));
-    if (!res.ok || !body.ok) throw new Error(body.error || 'Odeslání se nepovedlo. Zkuste to prosím znovu, nebo volejte +420 774 860 054.');
+    if (!res.ok || !body.ok) throw new Error(body.error || T.errSend);
 
     const sum = priceOrder({ ...data, duration: state.duration });
-    window.gtag && window.gtag('event', 'generate_lead', { currency: 'CZK', value: sum.total ?? 0, item_id: data.product });
+    window.trackLead && window.trackLead(sum.total ?? 0, data.product);
 
     $('[data-thanks-name]').textContent = data.name.trim();
     $('[data-thanks-phone]').textContent = data.phone.trim();
@@ -190,7 +197,7 @@ form.addEventListener('submit', async (e) => {
     showError(err.message);
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Odeslat objednávku';
+    btn.textContent = T.submit;
   }
 });
 
