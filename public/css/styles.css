@@ -91,7 +91,15 @@ select option { color: var(--ink); }
 .hero__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* 10 sloupců: nahoře 2 × 5, uprostřed veslo přes celou šířku, dole pás 6 + úzký eliptical 4 (dlouhé stroje se jinak ořízly) */
 .hero__collage { display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: 1fr 1.15fr 1fr; gap: 6px; background: var(--paper); }
-.hero__collage img { min-height: 0; min-width: 0; border-radius: 3px; grid-column: span 5; }
+.hero__collage a { position: relative; display: block; min-height: 0; min-width: 0; overflow: hidden; border-radius: 3px; grid-column: span 5; }
+.hero__collage img { transition: transform .4s ease; }
+.hero__collage a:hover img, .hero__collage a:focus-visible img { transform: scale(1.04); }
+/* název stroje — na dotyku vidět vždy, s myší až při najetí */
+.hero__collage span { position: absolute; left: 8px; bottom: 8px; padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: var(--ink); font-size: 13px; font-weight: 600; }
+@media (hover: hover) {
+  .hero__collage span { opacity: 0; transform: translateY(4px); transition: opacity .2s, transform .2s; }
+  .hero__collage a:hover span, .hero__collage a:focus-visible span { opacity: 1; transform: none; }
+}
 .hero__collage-wide { grid-column: 1 / -1 !important; }
 .hero__collage-bp { grid-column: span 6 !important; }
 .hero__collage-om { grid-column: span 4 !important; }
