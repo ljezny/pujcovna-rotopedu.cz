@@ -146,7 +146,6 @@ function productPage(slug, items, version) {
     durationHeads: durations.map((d) => `<th scope="col">${esc(d)}</th>`).join(''),
     priceRows: items.map((p) => `<tr><th scope="row">${esc(p.name)}</th>${p.p.map((v) => `<td>${fmt(v)}</td>`).join('')}<td class="ptable__long">dohodou</td><td>${fmt(p.dep)}</td></tr>`).join(''),
     ship: fmt(main.ship),
-    deposit: fmt(main.dep),
     content: splitContent(body).split('\n').map((l) => `      ${l}`).join('\n'),
     others: others.map((p) => `<a class="other" href="/produkt/${p.slug}"><img src="/images/stroje/${p.img || p.id}.jpg" alt="" loading="lazy" width="160" height="120"><span>${esc(pageName(p.slug))}</span><small>od ${fmt(p.p[0])} Kč</small></a>`).join(''),
     preselect: ` data-preselect="${main.id}"`
