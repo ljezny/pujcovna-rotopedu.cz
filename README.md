@@ -12,7 +12,7 @@ Zatím je na webu jen **testovací formulář** pro ověření odesílání e-ma
 - **Lokálně:** Express `dev-server.js`
 
 ```
-public/              index.html
+public/              index.html, js/consent.js (GA4 + Google Ads)
 api/poptavka.js      POST /api/poptavka (Vercel)
 lib/poptavka.js      sdílená logika: validace, šablony e-mailů, odeslání
 test/                node --test
