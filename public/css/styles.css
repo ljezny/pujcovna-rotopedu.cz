@@ -116,6 +116,22 @@ select option { color: var(--ink); }
 .product__name a:hover { color: var(--ink-hover); }
 .product__actions { display: flex; align-items: center; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
 .product__more { font-size: 15px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+/* mobil: kompaktní řádky místo vysokých karet — výhody ✓ jsou na detailu stroje */
+@media (max-width: 600px) {
+  .products { gap: 10px; }
+  .product { display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: start; }
+  .product__img { aspect-ratio: 1; padding: 6px; margin: 12px 0 12px 12px; border-radius: 3px; }
+  .product__img--scene { padding: 0; }
+  .product__body { padding: 12px 14px; gap: 2px; }
+  .product__name { font-size: 17px; }
+  .product__feats { display: none; }
+  .product__price { margin-top: 6px; }
+  .product__price strong { font-size: 24px; }
+  .product__cat { display: none; }
+  .product__actions { margin-top: 10px; gap: 10px; flex-wrap: nowrap; }
+  .product__actions .btn { padding: 7px 12px; font-size: 14px; white-space: nowrap; }
+  .product__more { font-size: 13px; white-space: nowrap; }
+}
 .extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
 .extra { background: var(--paper); border-radius: 4px; padding: 20px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
 .extra strong { font-size: 17px; }
