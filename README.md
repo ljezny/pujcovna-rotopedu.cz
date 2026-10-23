@@ -14,6 +14,7 @@ Web je podle návrhu z Claude Design: ceník, doprava, pobočky, FAQ a objednáv
 ```
 src/                 šablony stránek: index.html, produkt.html, partials/ (head, hlavička, objednávka)
 content/produkty/    texty detailů strojů (převzaté z původního webu), 1. řádek = metadata v JSON
+scripts/ai-fotky.mjs AI fotky strojů v interiéru (OpenAI, klíč OPENAI_API_KEY v .env.local)
 scripts/build.mjs    generátor: src/ + content/ + katalog → public/index.html a public/produkt/*.html
 public/              vygenerované HTML + css/styles.css, fonts/, images/
 public/js/katalog.js ceník, pobočky, výpočet ceny — sdílí web i lib/poptavka.js

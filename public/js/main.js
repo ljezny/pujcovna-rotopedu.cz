@@ -16,7 +16,7 @@ const fill = (sel, html) => { const el = $(sel); if (el) el.innerHTML = html; };
 // ---------- statický obsah z katalogu ----------
 
 fill('[data-products]', PRODUCTS.map((p) => `
-  <article class="product">
+  <article class="product${p.extra ? ' product--extra' : ''}">
     <a href="/produkt/${p.slug}" class="product__img${p.scene ? ' product__img--scene' : ''}"><img src="/images/stroje/${p.img || p.id}.jpg" alt="${esc(p.name)}" loading="lazy" width="700" height="700"></a>
     <div class="product__body">
       <span class="product__cat">${esc(p.cat)}</span>
@@ -113,6 +113,13 @@ document.addEventListener('click', (e) => {
   if (thumb) {
     $('[data-gallery-main]').src = thumb.dataset.galleryThumb;
     $$('[data-gallery-thumb]').forEach((b) => (b === thumb ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
+    return;
+  }
+
+  const moreProducts = e.target.closest('[data-more-products]');
+  if (moreProducts) {
+    $('[data-products]').classList.add('is-open');
+    moreProducts.hidden = true;
     return;
   }
 

@@ -7,56 +7,58 @@ export const DEFAULT_DURATION = 1;
 
 /* Stroje, texty a ceny podle původního webu www.pujcovna-rotopedu.cz (ceník platný od 1. 8. 2025).
    slug = podstránka /produkt/<slug> (stejné adresy jako na původním webu; oba orbitreky sdílí jednu),
-   gallery = další fotky v images/stroje/galerie/, scene = fotka v interiéru (v kartě přes celou plochu), jinak produktovka na bílém
+   gallery = další fotky v images/stroje/galerie/ (produktovka na bílém, další fotky),
+   scene = hlavní fotka v interiéru (AI, scripts/ai-fotky.mjs) přes celou plochu, jinak produktovka na bílém,
+   extra = doplňkové vybavení na konci ceníku — na mobilu schované pod tlačítkem „Více“
    p = cena za DURATIONS[i] (u paddleboardu PADDLE_DURATIONS[i]), dep = vratná záloha, ship = doprava jedna cesta */
 export const PRODUCTS = [
   {
-    id: 'rm', slug: 'rotoped-magneticky', scene: true, cat: 'Rotopedy a cyklotrenažery', name: 'Rotoped magnetický',
+    id: 'rm', slug: 'rotoped-magneticky', scene: true, gallery: ['rm-produkt', 'rm-interier'], cat: 'Rotopedy a cyklotrenažery', name: 'Rotoped magnetický',
     feats: ['Vhodný pro rehabilitaci – stabilní a šetrný ke kloubům', 'Tichý chod – neruší sousedy ani sledování televize', 'Nepotřebuje zásuvku – umístíte ho kamkoliv', 'Dodáme složený a seřízený – bez nutnosti montáže'],
     p: [600, 800, 1200, 1600], dep: 3000, ship: 300
   },
   {
-    id: 're', slug: 'rotoped-elektronicky', cat: 'Rotopedy a cyklotrenažery', name: 'Rotoped elektronický',
+    id: 're', slug: 'rotoped-elektronicky', scene: true, gallery: ['re-produkt'], cat: 'Rotopedy a cyklotrenažery', name: 'Rotoped elektronický',
     feats: ['Tréninkové programy – automatické nastavení zátěže pro hubnutí i kondici', 'Přesná kontrola zátěže – ideální pro řízenou rehabilitaci', 'Maximální komfort – tichý chod, přehledný displej a ovládání tlačítky', 'Dodáme složený a připravený – stačí jen zapojit'],
     p: [900, 1200, 1800, 2400], dep: 4000, ship: 300
   },
   {
-    id: 'om', slug: 'elipticky-trenazer', cat: 'Eliptické trenažery', name: 'Eliptical (orbitrek) magnetický',
-    feats: ['Efektivní trénink – vysoký výdej energie a podpora spalování tuků', 'Procvičí celé tělo – zapojíte nohy, hýždě, ruce i břicho', 'Tichý chod – plynulý pohyb, který neruší ostatní členy domácnosti', 'Transportní kolečka – snadné přemístění trenažéru po tréninku'],
-    p: [900, 1200, 1800, 2400], dep: 4000, ship: 400
-  },
-  {
-    id: 'oe', slug: 'elipticky-trenazer', img: 'om', cat: 'Eliptické trenažery', name: 'Eliptical (orbitrek) elektronický',
-    feats: ['Efektivní trénink – vysoký výdej energie a podpora spalování tuků', 'Procvičí celé tělo – zapojíte nohy, hýždě, ruce i břicho', 'Plynulý pohyb – bez tvrdých nárazů jako při běhu', 'Transportní kolečka – snadné přemístění trenažéru po tréninku'],
-    p: [1000, 1400, 2100, 2800], dep: 4000, ship: 400
-  },
-  {
-    id: 'vt', slug: 'veslovaci-trenazer', cat: 'Veslovací trenažery', name: 'Veslovací trenažer',
-    feats: ['Procvičí celé tělo – zapojíte svaly nohou, zad, rukou i břicha', 'Sklápěcí konstrukce – po tréninku trenažér snadno složíte', 'Dodáme složený a seřízený – nemusíte nic montovat', 'Snadná manipulace – vejde se do auta i do každého pokoje'],
-    p: [1000, 1400, 2100, 2800], dep: 4000, ship: 400
-  },
-  {
-    id: 'bp', slug: 'bezecky-pas-elektronicky', gallery: ['bp-1', 'bp-2', 'bp-3', 'bp-4'], cat: 'Běžecké pásy', name: 'Běžecký pás elektronický',
+    id: 'bp', slug: 'bezecky-pas-elektronicky', scene: true, gallery: ['bp-produkt', 'bp-1', 'bp-2', 'bp-3', 'bp-4'], cat: 'Běžecké pásy', name: 'Běžecký pás elektronický',
     feats: ['Stabilní – nosnost min. 120 kg, běžecká plocha 40+ cm', 'Sklápěcí konstrukce – po tréninku šetří místo', 'Dodáme složený a seřízený – nemusíte nic montovat', 'Možnost dopravy – s výnosem až do bytu'],
     p: [1600, 2200, 3300, 4400], dep: 5000, ship: 400
   },
   {
-    id: 'ct', slug: 'cyklotrenazer', cat: 'Rotopedy a cyklotrenažery', name: 'Cyklotrenažer',
-    feats: ['Trénujete na vlastním kole – žádné zvykání na jiný posed', 'Plynulé řazení – využíváte vlastní přehazovačku jako venku', 'Kompaktní a skladný – po tréninku trenažér snadno uklidíte', 'Snadná přeprava – pohodlně se vejde do každého auta'],
-    p: [400, 600, 900, 1200], dep: 2000, ship: 300
+    id: 'vt', slug: 'veslovaci-trenazer', scene: true, gallery: ['vt-produkt'], cat: 'Veslovací trenažery', name: 'Veslovací trenažer',
+    feats: ['Procvičí celé tělo – zapojíte svaly nohou, zad, rukou i břicha', 'Sklápěcí konstrukce – po tréninku trenažér snadno složíte', 'Dodáme složený a seřízený – nemusíte nic montovat', 'Snadná manipulace – vejde se do auta i do každého pokoje'],
+    p: [1000, 1400, 2100, 2800], dep: 4000, ship: 400
   },
   {
-    id: 'sk', slug: 'spinningove-kolo', cat: 'Rotopedy a cyklotrenažery', name: 'Spinningové kolo',
+    id: 'sk', slug: 'spinningove-kolo', scene: true, gallery: ['sk-produkt'], cat: 'Rotopedy a cyklotrenažery', name: 'Spinningové kolo',
     feats: ['Vysoká stabilita – pevná konstrukce i při jízdě ve stoje', 'Těžký setrvačník – plynulý chod i při vysoké zátěži', 'Nastavení na míru – snadné přizpůsobení sedla i řídítek', 'Nemusíte nic montovat – dodáme složený a seřízený'],
     p: [1200, 1600, 2400, 3200], dep: 4000, ship: 400
   },
   {
-    id: 'bo', slug: 'bosu', cat: 'Bosu', name: 'Bosu',
+    id: 'om', slug: 'elipticky-trenazer', scene: true, gallery: ['om-produkt'], cat: 'Eliptické trenažery', name: 'Eliptical (orbitrek) magnetický',
+    feats: ['Efektivní trénink – vysoký výdej energie a podpora spalování tuků', 'Procvičí celé tělo – zapojíte nohy, hýždě, ruce i břicho', 'Tichý chod – plynulý pohyb, který neruší ostatní členy domácnosti', 'Transportní kolečka – snadné přemístění trenažéru po tréninku'],
+    p: [900, 1200, 1800, 2400], dep: 4000, ship: 400
+  },
+  {
+    id: 'oe', slug: 'elipticky-trenazer', scene: true, gallery: ['om-produkt'], img: 'om', cat: 'Eliptické trenažery', name: 'Eliptical (orbitrek) elektronický',
+    feats: ['Efektivní trénink – vysoký výdej energie a podpora spalování tuků', 'Procvičí celé tělo – zapojíte nohy, hýždě, ruce i břicho', 'Plynulý pohyb – bez tvrdých nárazů jako při běhu', 'Transportní kolečka – snadné přemístění trenažéru po tréninku'],
+    p: [1000, 1400, 2100, 2800], dep: 4000, ship: 400
+  },
+  {
+    id: 'bo', slug: 'bosu', extra: true, cat: 'Bosu', name: 'Bosu',
     feats: ['Zlepší stabilitu těla a rovnováhu', 'Posílí hluboký stabilizační systém', 'Původně pomůcka pro rehabilitační centra', 'Doma i v kanceláři – například jako prevence bolesti zad'],
     p: [300, 500, 700, 900], dep: 1000, ship: 300
   },
   {
-    id: 'pb', slug: 'paddleboard', cat: 'Paddleboardy', name: 'Paddleboard vč. pádla a pumpy',
+    id: 'ct', slug: 'cyklotrenazer', extra: true, cat: 'Rotopedy a cyklotrenažery', name: 'Cyklotrenažer',
+    feats: ['Trénujete na vlastním kole – žádné zvykání na jiný posed', 'Plynulé řazení – využíváte vlastní přehazovačku jako venku', 'Kompaktní a skladný – po tréninku trenažér snadno uklidíte', 'Snadná přeprava – pohodlně se vejde do každého auta'],
+    p: [400, 600, 900, 1200], dep: 2000, ship: 300
+  },
+  {
+    id: 'pb', slug: 'paddleboard', extra: true, cat: 'Paddleboardy', name: 'Paddleboard vč. pádla a pumpy',
     feats: ['Nafukovací – v ceně pumpa, pádlo a batoh', 'Sbalený váží cca 15 kg – odvezete ho klidně i tramvají', 'Zapojí svaly celého těla a zlepší rovnováhu', 'Techniku zvládnete hravě vy i vaše děti'],
     p: [800, 1400, 1900, 2400], dep: 4000, ship: 400, paddle: true
   }
