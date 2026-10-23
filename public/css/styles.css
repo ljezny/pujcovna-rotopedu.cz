@@ -1,0 +1,225 @@
+/* Půjčovna rotopedů — styly podle návrhu z Claude Design */
+
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 300 900; font-stretch: 62% 125%; font-display: swap; src: url('/fonts/archivo-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 300 900; font-stretch: 62% 125%; font-display: swap; src: url('/fonts/archivo-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/jetbrains-mono-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/jetbrains-mono-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --ink: #0A3A78;
+  --ink-hover: #0352B5;
+  --paper: #f6f8fb;
+  --tint: #e8eef5;
+  --line: #dae3ee;
+  --line-2: #d2dde9;
+  --text: #34465f;
+  --muted: #596b84;
+  --accent: #04BFA3;
+  --accent-2: #05D9C5;
+  --dark-field: #0F4689;
+  --dark-line: #2D5E9C;
+  --dark-text: #cbd9ea;
+  --dark-muted: #adc1da;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { box-sizing: border-box; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--ink-hover); }
+img { display: block; max-width: 100%; }
+input, select, textarea, button { font-family: inherit; font-size: inherit; }
+select option { color: var(--ink); }
+[hidden] { display: none !important; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
+.tint { background: var(--tint); }
+.rule { border-top: 1px solid var(--line); }
+.stack { display: flex; flex-direction: column; }
+.h2 { margin: 0; font-size: clamp(32px, 4vw, 48px); font-weight: 800; font-stretch: 110%; letter-spacing: -0.025em; }
+.lead { margin: 0; font-size: 16px; color: var(--text); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* tlačítka */
+.btn { display: inline-block; padding: 16px 28px; border-radius: 999px; font-weight: 700; font-size: 17px; border: 0; cursor: pointer; }
+.btn--accent { background: var(--accent); color: var(--ink); }
+.btn--accent:hover { background: var(--accent-2); color: var(--ink); }
+.btn--outline { border: 1.5px solid var(--ink); font-weight: 600; background: transparent; color: var(--ink); }
+.btn--outline:hover { background: var(--ink); color: var(--paper); }
+.btn--ink { background: var(--ink); color: var(--paper); padding: 11px 20px; font-weight: 600; font-size: 15px; }
+.btn--ink:hover { background: var(--ink-hover); color: var(--paper); }
+.btn--sm { padding: 11px 18px; font-size: 15px; font-weight: 600; }
+
+/* hlavička */
+.header { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.header__in { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.header__logo img { height: 48px; width: auto; }
+.nav { display: flex; gap: 28px; font-size: 15px; font-weight: 500; flex-wrap: wrap; }
+@media (max-width: 760px) {
+  .header__in { padding: 10px 16px; gap: 12px; flex-wrap: nowrap; }
+  .header__logo img { height: 38px; }
+  .nav { gap: 0; margin-left: auto; }
+  .nav a:not([href^="tel:"]) { display: none; }
+  .header .btn--ink { padding: 9px 16px; font-size: 14px; }
+}
+
+/* hero */
+.hero { max-width: 1200px; margin: 0 auto; padding: 72px 24px 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 48px; align-items: center; }
+.hero__copy { display: flex; flex-direction: column; gap: 28px; }
+.hero__cities { font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.hero h1 { margin: 0; font-size: clamp(44px, 6vw, 84px); line-height: 0.95; font-weight: 800; font-stretch: 112%; letter-spacing: -0.035em; text-wrap: balance; }
+.hero__text { margin: 0; font-size: 20px; line-height: 1.5; color: var(--text); max-width: 520px; text-wrap: pretty; }
+.hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero__stats { display: flex; gap: 32px; flex-wrap: wrap; padding-top: 8px; font-size: 15px; color: var(--text); }
+.hero__stats strong { font-size: 22px; color: var(--ink); }
+.hero__img { aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden; background: #e4ebf3; }
+.hero__img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* jak to funguje */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 32px; }
+.step { display: flex; flex-direction: column; gap: 12px; border-top: 2px solid var(--ink); padding-top: 20px; }
+.step__no { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.step h3 { margin: 0; font-size: 24px; font-weight: 700; }
+.step p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--text); text-wrap: pretty; }
+
+/* ceník */
+.pricing__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.durs { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.durs__note { font-size: 13px; color: var(--muted); }
+.seg { display: flex; background: var(--paper); border-radius: 999px; padding: 4px; gap: 2px; border: 1px solid var(--line-2); flex-wrap: wrap; }
+.seg button { border: 0; cursor: pointer; padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 15px; background: transparent; color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+@media (max-width: 520px) {
+  .durs { align-items: stretch; width: 100%; }
+  .seg { flex-wrap: nowrap; }
+  .seg button { flex: 1; padding: 10px 4px; font-size: 14px; white-space: nowrap; }
+}
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.product { background: var(--paper); border-radius: 4px; display: flex; flex-direction: column; overflow: hidden; }
+/* produktové fotky jsou na bílém pozadí — celé, bez ořezu */
+.product__img { aspect-ratio: 4 / 3; background: #fff; overflow: hidden; padding: 12px; }
+.product__img img { width: 100%; height: 100%; object-fit: contain; }
+.product__img--scene { padding: 0; }
+.product__img--scene img { object-fit: cover; }
+.product__body { padding: 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.product__cat { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.product__name { font-size: 20px; font-weight: 700; line-height: 1.2; }
+.product__sub { font-size: 14px; line-height: 1.45; color: var(--text); flex: 1; }
+.product__price { display: flex; align-items: baseline; gap: 8px; margin-top: 14px; font-variant-numeric: tabular-nums; }
+.product__price strong { font-size: 32px; font-weight: 800; font-stretch: 108%; letter-spacing: -0.02em; }
+.product__price > span, .product__dep { font-size: 14px; color: var(--muted); }
+.product__dep { font-size: 13px; }
+.product .btn { margin-top: 14px; }
+.extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.extra { background: var(--paper); border-radius: 4px; padding: 20px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.extra strong { font-size: 17px; }
+.extra span { font-size: 14px; color: var(--text); }
+.extra__price { font-size: 20px; font-weight: 800; white-space: nowrap; }
+
+/* doprava */
+.split { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 48px; }
+.ship__text { margin: 0; font-size: 18px; line-height: 1.55; color: var(--text); text-wrap: pretty; }
+.ship__prices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.ship__price { border: 1.5px solid var(--ink); padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+.ship__price strong { font-size: 36px; font-weight: 800; font-stretch: 110%; }
+.ship__price span { font-size: 15px; color: var(--text); }
+.small { font-size: 14px; color: var(--muted); }
+.zones { border-top: 1px solid var(--line-2); }
+.zone { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line-2); font-size: 16px; }
+.zone span { color: var(--text); }
+
+/* pobočky */
+.branches { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1px; background: var(--line-2); border: 1px solid var(--line-2); }
+.branch { background: var(--paper); padding: 24px; display: flex; flex-direction: column; gap: 6px; }
+.branch strong { font-size: 22px; font-weight: 700; }
+.branch span { font-size: 16px; }
+.branch small { font-size: 14px; color: var(--muted); }
+
+/* reference */
+.quote { margin: 0; display: flex; flex-direction: column; gap: 20px; }
+.quote blockquote { margin: 0; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.3; font-weight: 500; letter-spacing: -0.01em; text-wrap: pretty; }
+.quote figcaption { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+
+/* FAQ */
+.faq { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 48px; align-items: start; }
+.faq__list { border-top: 1.5px solid var(--ink); grid-column: span 2; min-width: 0; }
+@media (max-width: 760px) { .faq__list { grid-column: auto; } }
+.faq details { border-bottom: 1px solid var(--line-2); }
+.faq summary { list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; cursor: pointer; padding: 22px 0; font-size: 19px; font-weight: 600; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; font-size: 24px; font-weight: 400; flex: none; }
+.faq details[open] summary::after { content: '−'; }
+.faq details p { margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: var(--text); max-width: 680px; text-wrap: pretty; }
+
+/* objednávka */
+.order { background: var(--ink); color: var(--paper); }
+.order a { color: var(--paper); }
+.order a:hover { color: var(--accent-2); }
+.order__in { max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 56px; align-items: start; }
+.order h2 { margin: 0; font-size: clamp(36px, 4.6vw, 60px); line-height: 1; font-weight: 800; font-stretch: 110%; letter-spacing: -0.03em; }
+.order__text { margin: 0; font-size: 18px; line-height: 1.55; color: var(--dark-text); text-wrap: pretty; }
+.order__contact { display: flex; flex-direction: column; gap: 6px; font-size: 18px; }
+.order__contact a:first-child { font-weight: 700; }
+.summary { margin-top: 12px; border: 1px solid var(--dark-line); padding: 24px; display: flex; flex-direction: column; gap: 12px; font-variant-numeric: tabular-nums; }
+.summary .eyebrow { color: var(--dark-muted); }
+.summary__row { display: flex; justify-content: space-between; gap: 12px; font-size: 16px; }
+.summary__row span:last-child { white-space: nowrap; }
+.summary__total { font-size: 24px; font-weight: 800; border-top: 1px solid var(--dark-line); padding-top: 12px; }
+.summary__total span:last-child { color: var(--accent-2); }
+.summary__dep { font-size: 15px; color: var(--dark-muted); }
+
+.form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.form .full { grid-column: 1 / -1; }
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.field > span, .field > legend { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark-muted); padding: 0; }
+fieldset.field { border: 0; margin: 0; padding: 0; }
+.input { width: 100%; background: var(--dark-field); border: 1px solid var(--dark-line); color: var(--paper); padding: 14px; border-radius: 3px; font-size: 17px; color-scheme: dark; }
+.input::placeholder { color: #8fa6c4; }
+.input:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+select.input { padding: 15px 14px; }
+textarea.input { resize: vertical; }
+.choices { display: grid; gap: 6px; }
+.choices--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.choices--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.choice { cursor: pointer; padding: 14px 6px; border-radius: 3px; font-weight: 600; font-size: 15px; border: 1px solid var(--dark-line); background: transparent; color: var(--paper); }
+.choices--2 .choice { padding: 14px; text-align: left; }
+.choice[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+.checks { display: flex; flex-direction: column; gap: 12px; }
+.check { display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 16px; }
+.check input { width: 20px; height: 20px; accent-color: var(--accent); flex: none; }
+.form__error { color: #ffb4a3; font-size: 15px; }
+.form__note { margin: 0; font-size: 13px; color: var(--dark-muted); line-height: 1.5; }
+.form__note a { text-decoration: underline; }
+.form .btn { padding: 18px; font-size: 18px; }
+.form .btn:disabled { opacity: 0.6; cursor: wait; }
+.hp { position: absolute; left: -9999px; }
+@media (max-width: 520px) {
+  .form { grid-template-columns: minmax(0, 1fr); }
+  .choices--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.thanks { border: 1px solid var(--accent); padding: 40px; display: flex; flex-direction: column; gap: 16px; }
+.thanks strong { font-size: 32px; font-weight: 800; font-stretch: 110%; }
+.thanks p { margin: 0; font-size: 18px; line-height: 1.55; color: var(--dark-text); }
+.thanks button { align-self: flex-start; cursor: pointer; border: 1.5px solid var(--paper); background: transparent; color: var(--paper); padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: 15px; }
+
+/* patička */
+.footer { border-top: 1px solid #1F5294; }
+.footer__in { max-width: 1200px; margin: 0 auto; padding: 28px 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--dark-muted); }
+.footer__brand { display: flex; align-items: center; gap: 12px; }
+.footer__mark { width: 36px; height: 36px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; flex: none; }
+.footer__mark img { width: 26px; height: 26px; }
+.footer__links { display: flex; gap: 16px; flex-wrap: wrap; }
+.order .footer a { color: var(--dark-muted); }
+.order .footer a:hover { color: var(--paper); }
+
+/* cookie lišta (js/consent.js) */
+.cookies { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 20; max-width: 760px; margin: 0 auto; background: #fff; color: var(--ink); border: 1px solid var(--line-2); border-radius: 6px; box-shadow: 0 8px 30px rgba(10, 58, 120, 0.18); padding: 18px 20px; display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; }
+.cookies[hidden] { display: none; }
+.cookies__text { flex: 1 1 320px; margin: 0; font-size: 14px; line-height: 1.5; color: var(--text); }
+.cookies__text a { text-decoration: underline; }
+.cookies__btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.cookies__btns button { cursor: pointer; padding: 10px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); }
+.cookies__btns .cookies__ok { background: var(--ink); color: var(--paper); }

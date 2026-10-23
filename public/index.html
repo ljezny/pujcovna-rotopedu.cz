@@ -2,84 +2,254 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- noindex do přepojení domény — jinak by se vercel.app indexovalo vedle původního webu -->
   <meta name="robots" content="noindex">
-  <title>Půjčovna rotopedů — test formuláře</title>
+  <title>Půjčovna rotopedů a fitness strojů — Brno, Ostrava, Olomouc, Jihlava, Liberec, Zlín</title>
+  <meta name="description" content="Půjčte si rotoped, běžecký pás nebo orbitrek na 2–8 týdnů. Na rehabilitaci, na kondici, nebo jen na vyzkoušení. Dovezeme, vyneseme, odvezeme.">
+  <meta name="theme-color" content="#0A3A78">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/styles.css?v=1">
   <script src="/js/consent.js?v=1"></script>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 520px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; }
-    label { display: block; margin: 14px 0 4px; font-weight: 600; }
-    input[type=text], input[type=email], input[type=tel], textarea { width: 100%; box-sizing: border-box; padding: 10px; font: inherit; border: 1px solid #bbb; border-radius: 6px; }
-    textarea { min-height: 120px; }
-    .check { display: flex; gap: 8px; align-items: flex-start; font-weight: 400; }
-    .hp { position: absolute; left: -9999px; }
-    button { margin-top: 18px; padding: 12px 20px; font: inherit; font-weight: 700; border: 0; border-radius: 6px; background: #1a1a1a; color: #fff; cursor: pointer; }
-    button:disabled { opacity: .5; }
-    #status { margin-top: 16px; }
-    .ok { color: #1a7f37; } .err { color: #c62828; }
-  </style>
+  <script type="module" src="/js/main.js?v=1"></script>
 </head>
 <body>
-  <h1>Půjčovna rotopedů</h1>
-  <p>Testovací formulář pro ověření odesílání e-mailů.</p>
 
-  <form id="form" novalidate>
-    <label for="name">Jméno</label>
-    <input type="text" id="name" name="name" required autocomplete="name">
+<header class="header">
+  <div class="header__in">
+    <a href="#top" class="header__logo"><img src="/images/logo.png" alt="Půjčovna rotopedů a fitness vybavení" width="600" height="200"></a>
+    <nav class="nav" aria-label="Hlavní menu">
+      <a href="#cenik">Ceník</a>
+      <a href="#doprava">Doprava</a>
+      <a href="#pobocky">Pobočky</a>
+      <a href="#faq">Časté dotazy</a>
+      <a href="tel:+420774860054">774 860 054</a>
+    </nav>
+    <a href="#objednavka" class="btn btn--ink">Objednat</a>
+  </div>
+</header>
 
-    <label for="email">E-mail</label>
-    <input type="email" id="email" name="email" required autocomplete="email">
+<main>
+<section id="top" class="hero">
+  <div class="hero__copy">
+    <div class="hero__cities">Brno · Ostrava · Olomouc · Jihlava · Liberec · Zlín</div>
+    <h1>Nekupujte si zbytečně další věšák!</h1>
+    <p class="hero__text">Půjčte si rotoped, běžecký pás nebo orbitrek na 2–8 týdnů. Na rehabilitaci, na kondici, nebo jen na vyzkoušení. Dovezeme, vyneseme, odvezeme.</p>
+    <div class="hero__ctas">
+      <a href="#objednavka" class="btn btn--accent">Objednat stroj</a>
+      <a href="#cenik" class="btn btn--outline">Zobrazit ceník</a>
+    </div>
+    <div class="hero__stats">
+      <div><strong>od 300 Kč</strong><br>za 2 týdny</div>
+      <div><strong>90+</strong><br>doporučení</div>
+      <div><strong>6 měst</strong><br>výdejní sklady</div>
+    </div>
+  </div>
+  <div class="hero__img"><img src="/images/hero.jpg" alt="Rotoped doma v obýváku" width="1000" height="667" fetchpriority="high"></div>
+</section>
 
-    <label for="phone">Telefon (nepovinné)</label>
-    <input type="tel" id="phone" name="phone" autocomplete="tel">
+<section id="jak" class="rule">
+  <div class="wrap stack" style="gap:40px">
+    <h2 class="h2">Jak to funguje</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step__no">01</span>
+        <h3>Vyberte stroj a délku</h3>
+        <p>Pronájem od 2 do 8 týdnů. Platíte jen za dobu, kterou opravdu potřebujete.</p>
+      </div>
+      <div class="step">
+        <span class="step__no">02</span>
+        <h3>Vyzvedněte nebo nechte dovézt</h3>
+        <p>Stroj přivezeme složený a seřízený. Na požádání vyneseme do patra bez příplatku.</p>
+      </div>
+      <div class="step">
+        <span class="step__no">03</span>
+        <h3>Cvičte, pak vraťte</h3>
+        <p>Při předání platíte jen zálohu. Půjčovné se z ní odečte při vrácení.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <label for="message">Zpráva</label>
-    <textarea id="message" name="message" required></textarea>
+<section id="cenik" class="tint">
+  <div class="wrap stack" style="gap:32px">
+    <div class="pricing__head">
+      <div class="stack" style="gap:10px">
+        <h2 class="h2">Ceník</h2>
+        <p class="lead">Cena za celou dobu pronájmu. Platný od 1. 8. 2025.</p>
+      </div>
+      <div class="durs">
+        <div class="seg" role="group" aria-label="Délka pronájmu" data-durations></div>
+        <span class="durs__note">Paddleboard: víkend · týden · 10 dní · 14 dní</span>
+      </div>
+    </div>
 
-    <!-- honeypot -->
-    <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="products" data-products></div>
 
-    <label class="check"><input type="checkbox" name="gdpr" required> Souhlasím se zpracováním osobních údajů.</label>
+    <div class="stack" style="gap:14px">
+      <span class="eyebrow">Doplňky</span>
+      <div class="extras">
+        <div class="extra">
+          <div class="stack" style="gap:4px"><strong>Tlumicí podložka proti hluku</strong><span>Pro sousedy v paneláku</span></div>
+          <span class="extra__price"><span data-pad-price>100</span> Kč</span>
+        </div>
+        <div class="extra">
+          <div class="stack" style="gap:4px"><strong>Ochranná podložka pod rotoped</strong><span>Na plovoucí podlahu a vinyl</span></div>
+          <span class="extra__price">100 Kč</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <button type="submit">Odeslat</button>
-    <div id="status" role="status"></div>
-  </form>
+<section id="doprava">
+  <div class="wrap split">
+    <div class="stack" style="gap:20px">
+      <h2 class="h2">Doprava</h2>
+      <p class="ship__text">Trenažery dopravujeme za první uzamykatelné dveře. Na požádání pomůžeme s výnosem do patra bez příplatku. Stroj přijede složený a seřízený.</p>
+      <div class="ship__prices">
+        <div class="ship__price"><strong>300 Kč</strong><span>Rotoped, Bosu, cyklotrenažer</span></div>
+        <div class="ship__price"><strong>400 Kč</strong><span>Všechny ostatní stroje</span></div>
+      </div>
+      <span class="small">Cena za jednu cestu k vám. Mimo uvedené oblasti nás kontaktujte.</span>
+    </div>
+    <div class="zones" data-zones></div>
+  </div>
+</section>
 
-  <script>
-    var form = document.getElementById('form');
-    var status = document.getElementById('status');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var btn = form.querySelector('button');
-      var data = {
-        name: form.name.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        message: form.message.value,
-        website: form.website.value,
-        gdpr: form.gdpr.checked
-      };
-      btn.disabled = true;
-      status.className = '';
-      status.textContent = 'Odesílám…';
-      fetch('/api/poptavka', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-        .then(function (r) { return r.json(); })
-        .then(function (res) {
-          if (!res.ok) throw new Error(res.error || 'Odeslání se nepovedlo.');
-          status.className = 'ok';
-          status.textContent = 'Odesláno. Díky!';
-          form.reset();
-        })
-        .catch(function (err) {
-          status.className = 'err';
-          status.textContent = err.message;
-        })
-        .finally(function () { btn.disabled = false; });
-    });
-  </script>
+<section id="pobocky" class="tint">
+  <div class="wrap stack" style="gap:32px">
+    <div class="stack" style="gap:10px">
+      <h2 class="h2">Pobočky</h2>
+      <p class="lead">Osobní prohlídka a vyzvednutí stroje po domluvě.</p>
+    </div>
+    <div class="branches" data-branches></div>
+  </div>
+</section>
+
+<section aria-label="Reference">
+  <div class="wrap split">
+    <figure class="quote">
+      <blockquote>„Skvělá domluva, vstřícné chování, profesionální přístup, dobře připravený stroj.“</blockquote>
+      <figcaption>Marcela Nováková</figcaption>
+    </figure>
+    <figure class="quote">
+      <blockquote>„Půjčovna funguje perfektně. Vše máte podle smlouvy, která je srozumitelná a jednoduchá.“</blockquote>
+      <figcaption>Z recenzí zákazníků · 90+ doporučení</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="faq" class="rule">
+  <div class="wrap faq">
+    <h2 class="h2">Časté dotazy</h2>
+    <div class="faq__list">
+      <details open><summary>Kolik zaplatím při převzetí?</summary><p>Při předání se platí jen záloha. Půjčovné se z ní odečte při vrácení stroje a zbytek vám vrátíme.</p></details>
+      <details><summary>Vynesete stroj do patra?</summary><p>Trenažery dopravujeme za první uzamykatelné dveře. Na požádání pomůžeme s výnosem do patra bez příplatku.</p></details>
+      <details><summary>Odvezu si stroj sám autem?</summary><p>Rotoped se vejde do běžného osobního auta se sklopenými zadními sedadly. U větších strojů se s námi raději poraďte.</p></details>
+      <details><summary>Hodí se rotoped na rehabilitaci?</summary><p>Ano. Magnetický rotoped je stabilní, šetrný ke kloubům a má tichý chod. Často ho půjčujeme po operacích kolen.</p></details>
+      <details><summary>Mám plovoucí podlahu nebo vinyl.</summary><p>Doporučujeme k rotopedu půjčit ochrannou podložku za 100 Kč, případně tlumicí podložku proti hluku.</p></details>
+      <details><summary>Dovezete i mimo uvedená města?</summary><p>Pro ceny dopravy mimo uvedené oblasti nás kontaktujte na <a href="tel:+420774860054">+420 774 860 054</a>.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<section id="objednavka" class="order">
+  <div class="order__in">
+    <div class="stack" style="gap:20px">
+      <h2>Objednávka</h2>
+      <p class="order__text">Vyplňte formulář, ozveme se vám do 24 hodin a domluvíme termín předání. Nebo volejte rovnou.</p>
+      <div class="order__contact">
+        <a href="tel:+420774860054">+420 774 860 054</a>
+        <a href="mailto:rezervace@pujcovna-rotopedu.cz">rezervace@pujcovna-rotopedu.cz</a>
+      </div>
+      <div class="summary" aria-live="polite">
+        <span class="eyebrow">Souhrn</span>
+        <div class="summary__row"><span data-sum="label">Vyberte stroj · 4 týdny</span><span><span data-sum="rent">0</span> Kč</span></div>
+        <div class="summary__row" data-sum-row="pad" hidden><span>Tlumicí podložka</span><span><span data-sum="pad">0</span> Kč</span></div>
+        <div class="summary__row" data-sum-row="mat" hidden><span>Ochranná podložka</span><span><span data-sum="mat">0</span> Kč</span></div>
+        <div class="summary__row" data-sum-row="ship" hidden><span>Doprava k vám</span><span><span data-sum="ship">0</span> Kč</span></div>
+        <div class="summary__row summary__total"><span>Celkem</span><span><span data-sum="total">0</span> Kč</span></div>
+        <div class="summary__row summary__dep"><span>Vratná záloha při předání</span><span><span data-sum="dep">–</span> Kč</span></div>
+      </div>
+    </div>
+
+    <div>
+      <form class="form" id="order-form" novalidate>
+        <label class="field full">
+          <span>Stroj *</span>
+          <select class="input" name="product" required data-product-select>
+            <option value="">Vyberte stroj…</option>
+          </select>
+        </label>
+        <fieldset class="field full">
+          <legend>Délka pronájmu</legend>
+          <div class="choices choices--4" data-form-durations></div>
+        </fieldset>
+        <label class="field">
+          <span>Město *</span>
+          <select class="input" name="city" required data-city-select></select>
+        </label>
+        <label class="field">
+          <span>Od kdy</span>
+          <input class="input" type="date" name="date" data-date>
+        </label>
+        <fieldset class="field full">
+          <legend>Předání</legend>
+          <div class="choices choices--2">
+            <button type="button" class="choice" data-mode="pickup" aria-pressed="true">Vyzvednu na pobočce</button>
+            <button type="button" class="choice" data-mode="delivery" aria-pressed="false">Dovézt domů</button>
+          </div>
+        </fieldset>
+        <label class="field full" data-address hidden>
+          <span>Adresa doručení *</span>
+          <input class="input" name="address" placeholder="Ulice, číslo, město, patro" autocomplete="street-address">
+        </label>
+        <label class="field full">
+          <span>Jméno a příjmení *</span>
+          <input class="input" name="name" required autocomplete="name">
+        </label>
+        <label class="field">
+          <span>Telefon *</span>
+          <input class="input" type="tel" name="phone" required placeholder="+420" autocomplete="tel">
+        </label>
+        <label class="field">
+          <span>E-mail</span>
+          <input class="input" type="email" name="email" autocomplete="email">
+        </label>
+        <label class="field full">
+          <span>Poznámka</span>
+          <textarea class="input" name="note" rows="3" placeholder="Např. výnos do 3. patra bez výtahu, rehabilitace po operaci kolena…"></textarea>
+        </label>
+        <div class="checks full">
+          <label class="check"><input type="checkbox" name="pad"> <span>Tlumicí podložka proti hluku (<span data-pad-price>100</span> Kč)</span></label>
+          <label class="check"><input type="checkbox" name="mat"> <span>Ochranná podložka pod stroj (100 Kč)</span></label>
+        </div>
+        <!-- honeypot -->
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form__error full" role="alert" data-error hidden></div>
+        <button type="submit" class="btn btn--accent full">Odeslat objednávku</button>
+        <p class="form__note full">Odesláním souhlasíte se zpracováním osobních údajů za účelem vyřízení objednávky.</p>
+      </form>
+
+      <div class="thanks" data-thanks hidden>
+        <strong>Děkujeme, <span data-thanks-name></span>.</strong>
+        <p>Objednávku jsme přijali. Do 24 hodin vám zavoláme na <span data-thanks-phone></span> a domluvíme předání.</p>
+        <button type="button" data-reset>Nová objednávka</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__in">
+      <span class="footer__brand"><span class="footer__mark"><img src="/images/logo-znak.png" alt="" width="26" height="26"></span>Půjčovna rotopedů JV s.r.o. · IČ 223013372 · Táborská 4488/123, Brno</span>
+      <span class="footer__links"><a href="#" data-cookie-settings>Měření návštěvnosti</a><span>© 2026 pujcovna-rotopedu.cz</span></span>
+    </div>
+  </footer>
+</section>
+
 </body>
 </html>

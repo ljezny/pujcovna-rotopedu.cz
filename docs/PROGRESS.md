@@ -6,7 +6,13 @@ Sesterský projekt `../beharna.cz` (stejný stack: statické HTML na Vercelu + s
 ## Hotovo
 
 - **Kostra projektu** podle beharna.cz: `public/` (statika), `api/poptavka.js` → `lib/poptavka.js`, `dev-server.js`, `vercel.json`, testy (`npm test`, 7/7).
-- **Testovací formulář** na `public/index.html` (jméno, e-mail, telefon, zpráva, souhlas, honeypot), `noindex`.
+- **Web podle návrhu z Claude Design** (export `~/Downloads/Pujcovna rotopedu.html`, rozbalený do statického HTML/CSS/JS):
+  - `public/index.html` + `css/styles.css` + `js/main.js`; fonty Archivo a JetBrains Mono jsou lokálně v `public/fonts/`.
+  - Ceník, pobočky a zóny dopravy jsou v `public/js/katalog.js`. Stejný soubor importuje i `lib/poptavka.js`, takže cena v e-mailu se počítá ze stejných dat jako na webu (číslům z prohlížeče se nevěří).
+  - Fotky strojů v ceníku jsou skutečné fotky z WooCommerce na původním webu (`public/images/stroje/`), u magnetického rotopedu nová fotka v interiéru (`scene: true` v katalogu = fotka přes celou kartu). Hero fotka (`images/hero.jpg`) je zatím ta z návrhu.
+  - Objednávka: stroj, délka, město, datum, vyzvednutí/dovoz (+ adresa), jméno, telefon (povinný), e-mail (nepovinný; bez něj nechodí potvrzení zákazníkovi), poznámka, podložky. E-mail provozovateli obsahuje souhrn ceny a zálohy.
+  - Kontaktní e-mail na webu je `rezervace@` (v návrhu bylo `info@`, ta schránka se nepoužívá).
+  - Stále `noindex` — vypnout až při přepojení domény.
 - **Vercel projekt** `pujcovna-rotopedu` v týmu „ljezny's projects“ (`prj_R7jeiL2uEdWwgKPClNY89uNCQBZr`), propojený s GitHub repem — push na `main` = produkční deploy.
 - **Produkce:** https://pujcovna-rotopedu.vercel.app
 - **SMTP funguje** (ověřeno na produkci, e-mail dorazil):
@@ -33,10 +39,10 @@ Sesterský projekt `../beharna.cz` (stejný stack: statické HTML na Vercelu + s
 
 ## Další kroky
 
-- [ ] Obsah a design webu (podklady ze současného www.pujcovna-rotopedu.cz, vzor beharna.cz).
-- [ ] Skutečný poptávkový formulář (pole podle nabídky rotopedů) + upravit šablony e-mailů v `lib/poptavka.js`.
-- [ ] Patička s odkazem „Měření návštěvnosti“ (`data-cookie-settings`) + CSS lišty `.cookies`.
+- [ ] Ověřit objednávku na produkci (skutečný e-mail na `rezervace@`).
+- [ ] Hero fotka — nahradit vlastní fotkou z půjčovny?
+- [ ] Ověřit texty a ceny v `katalog.js` (2 orbitreky sdílí jednu fotku; původní web má jen „Eliptický trenažer“).
 - [ ] Rozhodnout o GTM a Meta Pixelu (viz výše).
-- [ ] Ochrana osobních údajů (vč. sekce `#cookies`), favicon, robots.txt, sitemap.xml, OG obrázek; odstranit `noindex`.
+- [ ] Stránka `/ochrana-osobnich-udaju` (vč. sekce `#cookies`) — odkazuje na ni cookie lišta, favicon, robots.txt, sitemap.xml, OG obrázek; odstranit `noindex`.
 - [ ] Ověřit DKIM pro doménu ve wp-hostingu (doručitelnost).
 - [ ] Přepojit doménu `pujcovna-rotopedu.cz` / `www` na Vercel (až bude web hotový) + redirect www ↔ apex ve `vercel.json`.
