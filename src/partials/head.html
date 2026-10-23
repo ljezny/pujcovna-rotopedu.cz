@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- noindex do přepojení domény — jinak by se vercel.app indexovalo vedle původního webu -->
+  <meta name="robots" content="noindex">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <link rel="canonical" href="https://www.pujcovna-rotopedu.cz{{path}}">
+  <meta name="theme-color" content="#0A3A78">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/styles.css?v={{version}}">
+  <script src="/js/consent.js?v={{version}}"></script>
+  <script type="module" src="/js/main.js?v={{version}}"></script>
+</head>
+<body>

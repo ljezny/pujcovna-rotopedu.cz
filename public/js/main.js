@@ -1,4 +1,5 @@
-/* Půjčovna rotopedů — ceník, souhrn a objednávkový formulář */
+/* Půjčovna rotopedů — ceník, souhrn a objednávkový formulář.
+   Běží na úvodní stránce i na detailech strojů (public/produkt/*) — sekce, které stránka nemá, se přeskočí. */
 import {
   DURATIONS, DEFAULT_DURATION, PRODUCTS, PAD_PRICES, CITIES, ZONES,
   durationLabel, priceOrder, fmt
@@ -10,35 +11,43 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 
 const state = { duration: DEFAULT_DURATION, mode: 'pickup' };
 const form = $('#order-form');
+const fill = (sel, html) => { const el = $(sel); if (el) el.innerHTML = html; };
 
 // ---------- statický obsah z katalogu ----------
 
-$('[data-products]').innerHTML = PRODUCTS.map((p) => `
+fill('[data-products]', PRODUCTS.map((p) => `
   <article class="product">
-    <div class="product__img${p.scene ? ' product__img--scene' : ''}"><img src="/images/stroje/${p.img || p.id}.jpg" alt="${esc(p.name)}" loading="lazy" width="700" height="700"></div>
+    <a href="/produkt/${p.slug}" class="product__img${p.scene ? ' product__img--scene' : ''}"><img src="/images/stroje/${p.img || p.id}.jpg" alt="${esc(p.name)}" loading="lazy" width="700" height="700"></a>
     <div class="product__body">
       <span class="product__cat">${esc(p.cat)}</span>
-      <h3 class="product__name" style="margin:0">${esc(p.name)}</h3>
-      <span class="product__sub">${esc(p.sub)}</span>
+      <h3 class="product__name" style="margin:0"><a href="/produkt/${p.slug}">${esc(p.name)}</a></h3>
+      <ul class="product__feats">${p.feats.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>
       <div class="product__price"><strong><span data-price="${p.id}"></span> Kč</strong><span>za <span data-per="${p.id}"></span></span></div>
       <span class="product__dep">Vratná záloha ${fmt(p.dep)} Kč</span>
-      <button type="button" class="btn btn--outline btn--sm" data-pick="${p.id}">Objednat</button>
+      <div class="product__actions">
+        <button type="button" class="btn btn--outline btn--sm" data-pick="${p.id}">Objednat</button>
+        <a href="/produkt/${p.slug}" class="product__more">Více informací</a>
+      </div>
     </div>
-  </article>`).join('');
+  </article>`).join(''));
 
-$('[data-zones]').innerHTML = ZONES.map((z) => `<div class="zone"><strong>${esc(z.city)}</strong><span>${esc(z.area)}</span></div>`).join('');
+fill('[data-zones]', ZONES.map((z) => `<div class="zone"><strong>${esc(z.city)}</strong><span>${esc(z.area)}</span></div>`).join(''));
 
-$('[data-branches]').innerHTML = CITIES.map((c) => `
-  <div class="branch"><strong>${esc(c.name)}</strong><span>${esc(c.addr)}</span><small>${esc(c.note)}</small></div>`).join('');
+fill('[data-branches]', CITIES.map((c) => `
+  <div class="branch"><strong>${esc(c.name)}</strong><span>${esc(c.addr)}</span><small>${esc(c.note)}</small>
+    <a class="branch__tel" href="tel:${c.phone.replace(/\s+/g, '')}">${esc(c.phone)}</a></div>`).join(''));
 
 $('[data-product-select]').insertAdjacentHTML('beforeend',
   PRODUCTS.map((p) => `<option value="${p.id}">${esc(p.name)}</option>`).join(''));
 $('[data-city-select]').innerHTML = CITIES.map((c) => `<option>${esc(c.name)}</option>`).join('');
 
-$('[data-durations]').innerHTML = DURATIONS.map((d, i) => `<button type="button" data-dur="${i}">${d}</button>`).join('');
+fill('[data-durations]', DURATIONS.map((d, i) => `<button type="button" data-dur="${i}">${d}</button>`).join(''));
 $('[data-form-durations]').innerHTML = DURATIONS.map((_, i) => `<button type="button" class="choice" data-dur="${i}"></button>`).join('');
 
 $('[data-date]').min = new Date().toISOString().slice(0, 10);
+
+// detail stroje: formulář má předvyplněný stroj
+if (form.dataset.preselect) form.product.value = form.dataset.preselect;
 
 // ---------- překreslení podle stavu ----------
 
@@ -54,7 +63,9 @@ function render() {
   $$('[data-form-durations] [data-dur]').forEach((b) => { b.textContent = durationLabel(sel, Number(b.dataset.dur)); });
 
   PRODUCTS.forEach((p) => {
-    $(`[data-price="${p.id}"]`).textContent = fmt(p.p[d]);
+    const price = $(`[data-price="${p.id}"]`);
+    if (!price) return;
+    price.textContent = fmt(p.p[d]);
     $(`[data-per="${p.id}"]`).textContent = durationLabel(p, d);
   });
   $$('[data-pad-price]').forEach((el) => { el.textContent = fmt(PAD_PRICES[d]); });
@@ -92,6 +103,13 @@ document.addEventListener('click', (e) => {
 
   const mode = e.target.closest('[data-mode]');
   if (mode) { state.mode = mode.dataset.mode; showError(''); render(); return; }
+
+  const thumb = e.target.closest('[data-gallery-thumb]');
+  if (thumb) {
+    $('[data-gallery-main]').src = thumb.dataset.galleryThumb;
+    $$('[data-gallery-thumb]').forEach((b) => (b === thumb ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
+    return;
+  }
 
   const pick = e.target.closest('[data-pick]');
   if (pick) {
@@ -159,6 +177,7 @@ form.addEventListener('submit', async (e) => {
 
 $('[data-reset]').addEventListener('click', () => {
   form.reset();
+  if (form.dataset.preselect) form.product.value = form.dataset.preselect;
   state.mode = 'pickup';
   form.hidden = false;
   $('[data-thanks]').hidden = true;

@@ -11,6 +11,8 @@ Sesterský projekt `../beharna.cz` (stejný stack: statické HTML na Vercelu + s
   - Ceník, pobočky a zóny dopravy jsou v `public/js/katalog.js`. Stejný soubor importuje i `lib/poptavka.js`, takže cena v e-mailu se počítá ze stejných dat jako na webu (číslům z prohlížeče se nevěří).
   - Fotky strojů v ceníku jsou skutečné fotky z WooCommerce na původním webu (`public/images/stroje/`), u magnetického rotopedu nová fotka v interiéru (`scene: true` v katalogu = fotka přes celou kartu). Hero fotka (`images/hero.jpg`) je zatím ta z návrhu.
   - Objednávka: stroj, délka, město, datum, vyzvednutí/dovoz (+ adresa), jméno, telefon (povinný), e-mail (nepovinný; bez něj nechodí potvrzení zákazníkovi), poznámka, podložky. E-mail provozovateli obsahuje souhrn ceny a zálohy.
+  - **Obsah převzatý z původního webu** (23. 10.): stroje, názvy, pořadí, kategorie a výhody ✔️ podle ceníku a WooCommerce produktů, ceník (platný od 1. 8. 2025), doprava, pobočky (vč. telefonů Liberec a Zlín), 5 kroků „Jak to funguje“, skutečné recenze, příběh zakladatele, poukazy, odkaz na paddleboardbrno.cz. Odpovídá se „za pár hodin“ (dřív v návrhu „do 24 hodin“).
+  - **Detaily strojů** `/produkt/<slug>` (stejné adresy jako původní web): galerie, výhody, tabulka cen, delší popis z původního webu (`content/produkty/`), výhody půjčení, další stroje a objednávkový formulář s předvyplněným strojem. Generuje `npm run build` (`scripts/build.mjs` ze šablon v `src/`).
   - Kontaktní e-mail na webu je `rezervace@` (v návrhu bylo `info@`, ta schránka se nepoužívá).
   - Stále `noindex` — vypnout až při přepojení domény.
 - **Vercel projekt** `pujcovna-rotopedu` v týmu „ljezny's projects“ (`prj_R7jeiL2uEdWwgKPClNY89uNCQBZr`), propojený s GitHub repem — push na `main` = produkční deploy.
@@ -41,7 +43,8 @@ Sesterský projekt `../beharna.cz` (stejný stack: statické HTML na Vercelu + s
 
 - [ ] Ověřit objednávku na produkci (skutečný e-mail na `rezervace@`).
 - [ ] Hero fotka — nahradit vlastní fotkou z půjčovny?
-- [ ] Ověřit texty a ceny v `katalog.js` (2 orbitreky sdílí jednu fotku; původní web má jen „Eliptický trenažer“).
+- [ ] Orbitrek magnetický a elektronický sdílí jednu fotku (původní web má jen jeden produkt „Eliptický trenažer“).
+- [ ] Pobočky Zlín a Liberec mají jiné provozovatele (fakturační údaje: Michaela Horská, IČ 09278095; Petr Martínek, IČ 04293762) a Olomouc je Půjčovna rotopedů SV s.r.o. (IČ 223013305) — objednávky teď chodí všechny na `rezervace@`. Rozhodnout, jestli je posílat i na `zlin@` / `olomouc@` apod.
 - [ ] Rozhodnout o GTM a Meta Pixelu (viz výše).
 - [ ] Stránka `/ochrana-osobnich-udaju` (vč. sekce `#cookies`) — odkazuje na ni cookie lišta, favicon, robots.txt, sitemap.xml, OG obrázek; odstranit `noindex`.
 - [ ] Ověřit DKIM pro doménu ve wp-hostingu (doručitelnost).

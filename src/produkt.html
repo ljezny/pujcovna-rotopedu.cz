@@ -1,0 +1,60 @@
+<!-- include:head -->
+
+<!-- include:header -->
+
+<main>
+<section class="detail">
+  <nav class="crumbs" aria-label="Drobečková navigace"><a href="/">Domů</a> <span>/</span> <a href="/#cenik">Ceník</a> <span>/</span> <span aria-current="page">{{name}}</span></nav>
+
+  <div class="detail__top">
+    <div class="gallery" data-gallery>
+      <div class="gallery__main{{sceneClass}}"><img src="{{image}}" alt="{{name}}" width="700" height="700" fetchpriority="high" data-gallery-main></div>
+      {{thumbs}}
+    </div>
+
+    <div class="detail__info">
+      <span class="eyebrow">{{cat}}</span>
+      <h1>{{name}}</h1>
+      <p class="detail__headline">{{headline}}</p>
+      <ul class="product__feats detail__feats">{{feats}}</ul>
+      <div class="ptable">
+        <table>
+          <thead><tr><th scope="col"><span class="visually-hidden">Stroj</span></th>{{durationHeads}}<th scope="col">Záloha</th></tr></thead>
+          <tbody>{{priceRows}}</tbody>
+        </table>
+      </div>
+      <p class="small">Cena v Kč za celou dobu pronájmu. Při předání se platí jen záloha, půjčovné bude odečteno ze zálohy. Doprava jedna cesta {{ship}} Kč.</p>
+      <div class="hero__ctas">
+        <a href="#objednavka" class="btn btn--accent">Objednat</a>
+        <a href="tel:+420774860054" class="btn btn--outline">Zavolat 774 860 054</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rule">
+  <div class="wrap detail__body">
+    <div class="prose">
+{{content}}
+    </div>
+    <aside class="benefits">
+      <h2 class="eyebrow">Výhody půjčení</h2>
+      <div class="benefit"><strong>Nemusíte ztrácet čas</strong><p>cestováním do posilovny, ani čekat, až se váš oblíbený přístroj ve fitcentru uvolní. Máte ho stále k dispozici v soukromí vašeho domova.</p></div>
+      <div class="benefit"><strong>Kvalitní vybavení jen pro sebe</strong><p>Neřešíte otevírací doby, ani počasí.</p></div>
+      <div class="benefit"><strong>Ideální způsob, jak si vyzkoušet vlastní vůli</strong><p>dříve, než si koupíte vlastní fitness stroj. Spousta strojů končí po čase jako věšák nebo lapač prachu. Ověřte si, jak to bude u vás.</p></div>
+    </aside>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap stack" style="gap:24px">
+    <h2 class="h2">Další stroje</h2>
+    <div class="others">{{others}}</div>
+  </div>
+</section>
+</main>
+
+<!-- include:objednavka -->
+
+</body>
+</html>

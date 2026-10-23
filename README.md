@@ -12,7 +12,10 @@ Web je podle návrhu z Claude Design: ceník, doprava, pobočky, FAQ a objednáv
 - **Lokálně:** Express `dev-server.js`
 
 ```
-public/              index.html, css/styles.css, fonts/, images/
+src/                 šablony stránek: index.html, produkt.html, partials/ (head, hlavička, objednávka)
+content/produkty/    texty detailů strojů (převzaté z původního webu), 1. řádek = metadata v JSON
+scripts/build.mjs    generátor: src/ + content/ + katalog → public/index.html a public/produkt/*.html
+public/              vygenerované HTML + css/styles.css, fonts/, images/
 public/js/katalog.js ceník, pobočky, výpočet ceny — sdílí web i lib/poptavka.js
 public/js/main.js    ceník, souhrn a odeslání objednávky
 public/js/consent.js GA4 + Google Ads (opt-out lišta)
@@ -23,11 +26,20 @@ dev-server.js        lokální server (statika + API)
 vercel.json          outputDirectory public, hlavičky, cache
 ```
 
+## Stránky a build
+
+`public/index.html` a `public/produkt/*.html` se **needitují ručně** — mění se šablony v `src/`, texty v `content/produkty/`
+a stroje/ceny v `public/js/katalog.js`, pak `npm run build`. Vygenerované soubory se commitují (Vercel nic nebuildí);
+`npm test` selže, když build neodpovídá šablonám.
+
+Detaily strojů mají stejné adresy jako původní web (`/produkt/rotoped-magneticky` …), oba orbitreky sdílí `/produkt/elipticky-trenazer`.
+
 ## Lokálně
 
 ```bash
 npm install
 cp .env.example .env   # bez SMTP_HOST se e-maily jen logují do konzole
+npm run build          # po změně šablon / textů / katalogu
 npm run dev            # http://localhost:3000
 npm test
 ```

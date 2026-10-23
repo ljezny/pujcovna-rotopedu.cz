@@ -1,0 +1,93 @@
+<section id="objednavka" class="order">
+  <div class="order__in">
+    <div class="stack" style="gap:20px">
+      <h2>Objednávka</h2>
+      <p class="order__text">Vyplňte formulář, za pár hodin se vám ozveme a probereme detaily. Nebo volejte rovnou.</p>
+      <div class="order__contact">
+        <a href="tel:+420774860054">+420 774 860 054</a>
+        <a href="mailto:rezervace@pujcovna-rotopedu.cz">rezervace@pujcovna-rotopedu.cz</a>
+      </div>
+      <div class="summary" aria-live="polite">
+        <span class="eyebrow">Souhrn</span>
+        <div class="summary__row"><span data-sum="label">Vyberte stroj · 4 týdny</span><span><span data-sum="rent">0</span> Kč</span></div>
+        <div class="summary__row" data-sum-row="pad" hidden><span>Tlumicí podložka</span><span><span data-sum="pad">0</span> Kč</span></div>
+        <div class="summary__row" data-sum-row="mat" hidden><span>Podložka pod rotoped</span><span><span data-sum="mat">0</span> Kč</span></div>
+        <div class="summary__row" data-sum-row="ship" hidden><span>Doprava k vám</span><span><span data-sum="ship">0</span> Kč</span></div>
+        <div class="summary__row summary__total"><span>Celkem</span><span><span data-sum="total">0</span> Kč</span></div>
+        <div class="summary__row summary__dep"><span>Vratná záloha při předání</span><span><span data-sum="dep">–</span> Kč</span></div>
+      </div>
+    </div>
+
+    <div>
+      <form class="form" id="order-form" novalidate{{preselect}}>
+        <label class="field full">
+          <span>Stroj *</span>
+          <select class="input" name="product" required data-product-select>
+            <option value="">Vyberte stroj…</option>
+          </select>
+        </label>
+        <fieldset class="field full">
+          <legend>Délka pronájmu</legend>
+          <div class="choices choices--4" data-form-durations></div>
+        </fieldset>
+        <label class="field">
+          <span>Město *</span>
+          <select class="input" name="city" required data-city-select></select>
+        </label>
+        <label class="field">
+          <span>Od kdy</span>
+          <input class="input" type="date" name="date" data-date>
+        </label>
+        <fieldset class="field full">
+          <legend>Předání</legend>
+          <div class="choices choices--2">
+            <button type="button" class="choice" data-mode="pickup" aria-pressed="true">Vyzvednu na pobočce</button>
+            <button type="button" class="choice" data-mode="delivery" aria-pressed="false">Dovézt domů</button>
+          </div>
+        </fieldset>
+        <label class="field full" data-address hidden>
+          <span>Adresa doručení *</span>
+          <input class="input" name="address" placeholder="Ulice, číslo, město, patro" autocomplete="street-address">
+        </label>
+        <label class="field full">
+          <span>Jméno a příjmení *</span>
+          <input class="input" name="name" required autocomplete="name">
+        </label>
+        <label class="field">
+          <span>Telefon *</span>
+          <input class="input" type="tel" name="phone" required placeholder="+420" autocomplete="tel">
+        </label>
+        <label class="field">
+          <span>E-mail</span>
+          <input class="input" type="email" name="email" autocomplete="email">
+        </label>
+        <label class="field full">
+          <span>Poznámka</span>
+          <textarea class="input" name="note" rows="3" placeholder="Např. výnos do 3. patra bez výtahu, rehabilitace po operaci kolena…"></textarea>
+        </label>
+        <div class="checks full">
+          <label class="check"><input type="checkbox" name="pad"> <span>Tlumicí podložka proti hluku (<span data-pad-price>100</span> Kč)</span></label>
+          <label class="check"><input type="checkbox" name="mat"> <span>Podložka pod rotoped (100 Kč)</span></label>
+        </div>
+        <!-- honeypot -->
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form__error full" role="alert" data-error hidden></div>
+        <button type="submit" class="btn btn--accent full">Odeslat objednávku</button>
+        <p class="form__note full">Odesláním souhlasíte se zpracováním osobních údajů za účelem vyřízení objednávky.</p>
+      </form>
+
+      <div class="thanks" data-thanks hidden>
+        <strong>Děkujeme, <span data-thanks-name></span>.</strong>
+        <p>Objednávku jsme přijali. Za pár hodin vám zavoláme na <span data-thanks-phone></span> a domluvíme předání.</p>
+        <button type="button" data-reset>Nová objednávka</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__in">
+      <span class="footer__brand"><span class="footer__mark"><img src="/images/logo-znak.png" alt="" width="26" height="26"></span>Půjčovna rotopedů JV s.r.o. · IČ 223013372 · Táborská 4488/123, Brno</span>
+      <span class="footer__links"><a href="#" data-cookie-settings>Měření návštěvnosti</a><span>© 2026 pujcovna-rotopedu.cz</span></span>
+    </div>
+  </footer>
+</section>
