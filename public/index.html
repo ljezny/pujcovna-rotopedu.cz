@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Půjčovna rotopedů — test formuláře</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 520px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; }
+    label { display: block; margin: 14px 0 4px; font-weight: 600; }
+    input[type=text], input[type=email], input[type=tel], textarea { width: 100%; box-sizing: border-box; padding: 10px; font: inherit; border: 1px solid #bbb; border-radius: 6px; }
+    textarea { min-height: 120px; }
+    .check { display: flex; gap: 8px; align-items: flex-start; font-weight: 400; }
+    .hp { position: absolute; left: -9999px; }
+    button { margin-top: 18px; padding: 12px 20px; font: inherit; font-weight: 700; border: 0; border-radius: 6px; background: #1a1a1a; color: #fff; cursor: pointer; }
+    button:disabled { opacity: .5; }
+    #status { margin-top: 16px; }
+    .ok { color: #1a7f37; } .err { color: #c62828; }
+  </style>
+</head>
+<body>
+  <h1>Půjčovna rotopedů</h1>
+  <p>Testovací formulář pro ověření odesílání e-mailů.</p>
+
+  <form id="form" novalidate>
+    <label for="name">Jméno</label>
+    <input type="text" id="name" name="name" required autocomplete="name">
+
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email" required autocomplete="email">
+
+    <label for="phone">Telefon (nepovinné)</label>
+    <input type="tel" id="phone" name="phone" autocomplete="tel">
+
+    <label for="message">Zpráva</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <!-- honeypot -->
+    <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <label class="check"><input type="checkbox" name="gdpr" required> Souhlasím se zpracováním osobních údajů.</label>
+
+    <button type="submit">Odeslat</button>
+    <div id="status" role="status"></div>
+  </form>
+
+  <script>
+    var form = document.getElementById('form');
+    var status = document.getElementById('status');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button');
+      var data = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        message: form.message.value,
+        website: form.website.value,
+        gdpr: form.gdpr.checked
+      };
+      btn.disabled = true;
+      status.className = '';
+      status.textContent = 'Odesílám…';
+      fetch('/api/poptavka', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.error || 'Odeslání se nepovedlo.');
+          status.className = 'ok';
+          status.textContent = 'Odesláno. Díky!';
+          form.reset();
+        })
+        .catch(function (err) {
+          status.className = 'err';
+          status.textContent = err.message;
+        })
+        .finally(function () { btn.disabled = false; });
+    });
+  </script>
+</body>
+</html>

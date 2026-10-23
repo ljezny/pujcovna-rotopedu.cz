@@ -1,0 +1,22 @@
+{
+  "name": "pujcovna-rotopedu",
+  "version": "1.0.0",
+  "description": "Půjčovna rotopedů — single-page web s poptávkovým formulářem.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node dev-server.js",
+    "dev": "node --watch dev-server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
