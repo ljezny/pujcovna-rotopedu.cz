@@ -1,8 +1,8 @@
 /* Půjčovna rotopedů — ceník, souhrn a objednávkový formulář.
    Běží na úvodní stránce i na detailech strojů (public/produkt/*) — sekce, které stránka nemá, se přeskočí. */
 import {
-  DURATIONS, DEFAULT_DURATION, PRODUCTS, PAD_PRICES, CITIES, ZONES,
-  durationLabel, priceOrder, fmt
+  DURATIONS, DEFAULT_DURATION, LONG, LONG_LABEL, PRODUCTS, PAD_PRICES, CITIES, ZONES,
+  durationLabel, priceOrder, fmt, fmtPrice
 } from './katalog.js';
 import { obrazek } from './obrazky.js';
 
@@ -23,7 +23,7 @@ fill('[data-products]', PRODUCTS.map((p) => `
       <span class="product__cat">${esc(p.cat)}</span>
       <h3 class="product__name" style="margin:0"><a href="/produkt/${p.slug}">${esc(p.name)}</a></h3>
       <ul class="product__feats">${p.feats.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>
-      <div class="product__price"><strong><span data-price="${p.id}"></span> Kč</strong><span>za <span data-per="${p.id}"></span></span></div>
+      <div class="product__price"><strong data-price="${p.id}"></strong><span data-per="${p.id}"></span></div>
       <span class="product__dep">Vratná záloha ${fmt(p.dep)} Kč</span>
       <div class="product__actions">
         <button type="button" class="btn btn--outline btn--sm" data-pick="${p.id}">Objednat</button>
@@ -42,8 +42,8 @@ $('[data-product-select]').insertAdjacentHTML('beforeend',
   PRODUCTS.map((p) => `<option value="${p.id}">${esc(p.name)}</option>`).join(''));
 $('[data-city-select]').innerHTML = CITIES.map((c) => `<option>${esc(c.name)}</option>`).join('');
 
-fill('[data-durations]', DURATIONS.map((d, i) => `<button type="button" data-dur="${i}">${d}</button>`).join(''));
-$('[data-form-durations]').innerHTML = DURATIONS.map((_, i) => `<button type="button" class="choice" data-dur="${i}"></button>`).join('');
+fill('[data-durations]', [...DURATIONS, LONG_LABEL].map((d, i) => `<button type="button" data-dur="${i}">${d}</button>`).join(''));
+$('[data-form-durations]').innerHTML = [...DURATIONS, LONG_LABEL].map((_, i) => `<button type="button" class="choice" data-dur="${i}"></button>`).join('');
 
 $('[data-date]').min = new Date().toISOString().slice(0, 10);
 
@@ -66,15 +66,21 @@ function render() {
   const sel = selectedProduct();
 
   $$('[data-dur]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.dur) === d)));
-  $$('[data-form-durations] [data-dur]').forEach((b) => { b.textContent = durationLabel(sel, Number(b.dataset.dur)); });
+  $$('[data-form-durations] [data-dur]').forEach((b) => {
+    const i = Number(b.dataset.dur);
+    b.textContent = i === LONG ? LONG_LABEL : durationLabel(sel, i);
+  });
 
+  const long = d === LONG;
+  const note = $('[data-long-note]');
+  if (note) note.hidden = !long;
   PRODUCTS.forEach((p) => {
     const price = $(`[data-price="${p.id}"]`);
     if (!price) return;
-    price.textContent = fmt(p.p[d]);
-    $(`[data-per="${p.id}"]`).textContent = durationLabel(p, d);
+    price.textContent = long ? 'Cena dohodou' : `${fmt(p.p[d])} Kč`;
+    $(`[data-per="${p.id}"]`).textContent = long ? '' : `za ${durationLabel(p, d)}`;
   });
-  $$('[data-pad-price]').forEach((el) => { el.textContent = fmt(PAD_PRICES[d]); });
+  $$('[data-pad-price]').forEach((el) => { el.textContent = fmtPrice(long ? null : PAD_PRICES[d]); });
 
   $$('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === state.mode)));
   $('[data-address]').hidden = state.mode !== 'delivery';
@@ -83,13 +89,13 @@ function render() {
     product: form.product.value, duration: d, delivery: state.mode === 'delivery',
     pad: form.pad.checked, mat: form.mat.checked
   });
-  $('[data-sum="label"]').textContent = sel ? `${sel.name}, ${durationLabel(sel, d)}` : `Vyberte stroj · ${DURATIONS[d]}`;
-  $('[data-sum="rent"]').textContent = fmt(sum.rent);
-  $('[data-sum="pad"]').textContent = fmt(sum.pad);
-  $('[data-sum="mat"]').textContent = fmt(sum.mat);
-  $('[data-sum="ship"]').textContent = fmt(sum.ship);
-  $('[data-sum="total"]').textContent = fmt(sum.total);
-  $('[data-sum="dep"]').textContent = sel ? fmt(sum.deposit) : '–';
+  $('[data-sum="label"]').textContent = sel ? `${sel.name}, ${durationLabel(sel, d)}` : `Vyberte stroj · ${long ? LONG_LABEL.toLowerCase() : DURATIONS[d]}`;
+  $('[data-sum="rent"]').textContent = fmtPrice(sum.rent);
+  $('[data-sum="pad"]').textContent = fmtPrice(sum.pad);
+  $('[data-sum="mat"]').textContent = fmtPrice(sum.mat);
+  $('[data-sum="ship"]').textContent = fmtPrice(sum.ship);
+  $('[data-sum="total"]').textContent = fmtPrice(sum.total);
+  $('[data-sum="dep"]').textContent = sel ? fmtPrice(sum.deposit) : '–';
   $('[data-sum-row="pad"]').hidden = !form.pad.checked;
   $('[data-sum-row="mat"]').hidden = !form.mat.checked;
   $('[data-sum-row="ship"]').hidden = sum.ship === 0;
@@ -174,7 +180,7 @@ form.addEventListener('submit', async (e) => {
     if (!res.ok || !body.ok) throw new Error(body.error || 'Odeslání se nepovedlo. Zkuste to prosím znovu, nebo volejte +420 774 860 054.');
 
     const sum = priceOrder({ ...data, duration: state.duration });
-    window.gtag && window.gtag('event', 'generate_lead', { currency: 'CZK', value: sum.total, item_id: data.product });
+    window.gtag && window.gtag('event', 'generate_lead', { currency: 'CZK', value: sum.total ?? 0, item_id: data.product });
 
     $('[data-thanks-name]').textContent = data.name.trim();
     $('[data-thanks-phone]').textContent = data.phone.trim();

@@ -12,11 +12,11 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/styles.css?v=c7ef1c9d">
-  <script src="/js/consent.js?v=c7ef1c9d"></script>
+  <link rel="stylesheet" href="/css/styles.css?v=9a9c1153">
+  <script src="/js/consent.js?v=9a9c1153"></script>
   <!-- moduly importované z main.js taky s verzí, ať prohlížeč nedrží starý katalog -->
-  <script type="importmap">{"imports": {"/js/katalog.js": "/js/katalog.js?v=c7ef1c9d", "/js/obrazky.js": "/js/obrazky.js?v=c7ef1c9d"}}</script>
-  <script type="module" src="/js/main.js?v=c7ef1c9d"></script>
+  <script type="importmap">{"imports": {"/js/katalog.js": "/js/katalog.js?v=9a9c1153", "/js/obrazky.js": "/js/obrazky.js?v=9a9c1153"}}</script>
+  <script type="module" src="/js/main.js?v=9a9c1153"></script>
 </head>
 <body>
 
@@ -51,11 +51,11 @@
       <ul class="product__feats detail__feats"><li>Stabilní – nosnost min. 120 kg, běžecká plocha 40+ cm</li><li>Sklápěcí konstrukce – po tréninku šetří místo</li><li>Dodáme složený a seřízený – nemusíte nic montovat</li><li>Možnost dopravy – s výnosem až do bytu</li></ul>
       <div class="ptable">
         <table>
-          <thead><tr><th scope="col"><span class="visually-hidden">Stroj</span></th><th scope="col">2 týdny</th><th scope="col">4 týdny</th><th scope="col">6 týdnů</th><th scope="col">8 týdnů</th><th scope="col">Záloha</th></tr></thead>
-          <tbody><tr><th scope="row">Běžecký pás elektronický</th><td>1 600</td><td>2 200</td><td>3 300</td><td>4 400</td><td>5 000</td></tr></tbody>
+          <thead><tr><th scope="col"><span class="visually-hidden">Stroj</span></th><th scope="col">2 týdny</th><th scope="col">4 týdny</th><th scope="col">6 týdnů</th><th scope="col">8 týdnů</th><th scope="col">Delší doba</th><th scope="col">Záloha</th></tr></thead>
+          <tbody><tr><th scope="row">Běžecký pás elektronický</th><td>1 600</td><td>2 200</td><td>3 300</td><td>4 400</td><td class="ptable__long">dohodou</td><td>5 000</td></tr></tbody>
         </table>
       </div>
-      <p class="small">Cena v Kč za celou dobu pronájmu. Při předání se platí jen záloha, půjčovné bude odečteno ze zálohy. Doprava jedna cesta 400 Kč.</p>
+      <p class="small">Cena v Kč za celou dobu pronájmu. Za delší pronájem vám rádi nabídneme výhodnější cenu, <a href="tel:+420774860054">ozvěte se nám</a>. Při předání se platí jen záloha, půjčovné bude odečteno ze zálohy. Doprava jedna cesta 400 Kč.</p>
       <div class="hero__ctas">
         <a href="#objednavka" class="btn btn--accent">Objednat</a>
         <a href="tel:+420774860054" class="btn btn--outline">Zavolat 774 860 054</a>
@@ -123,12 +123,12 @@
       </div>
       <div class="summary" aria-live="polite">
         <span class="eyebrow">Souhrn</span>
-        <div class="summary__row"><span data-sum="label">Vyberte stroj · 4 týdny</span><span><span data-sum="rent">0</span> Kč</span></div>
-        <div class="summary__row" data-sum-row="pad" hidden><span>Tlumicí podložka</span><span><span data-sum="pad">0</span> Kč</span></div>
-        <div class="summary__row" data-sum-row="mat" hidden><span>Podložka pod rotoped</span><span><span data-sum="mat">0</span> Kč</span></div>
-        <div class="summary__row" data-sum-row="ship" hidden><span>Doprava k vám</span><span><span data-sum="ship">0</span> Kč</span></div>
-        <div class="summary__row summary__total"><span>Celkem</span><span><span data-sum="total">0</span> Kč</span></div>
-        <div class="summary__row summary__dep"><span>Vratná záloha při předání</span><span><span data-sum="dep">–</span> Kč</span></div>
+        <div class="summary__row"><span data-sum="label">Vyberte stroj · 4 týdny</span><span data-sum="rent">0 Kč</span></div>
+        <div class="summary__row" data-sum-row="pad" hidden><span>Tlumicí podložka</span><span data-sum="pad">0 Kč</span></div>
+        <div class="summary__row" data-sum-row="mat" hidden><span>Podložka pod rotoped</span><span data-sum="mat">0 Kč</span></div>
+        <div class="summary__row" data-sum-row="ship" hidden><span>Doprava k vám</span><span data-sum="ship">0 Kč</span></div>
+        <div class="summary__row summary__total"><span>Celkem</span><span data-sum="total">0 Kč</span></div>
+        <div class="summary__row summary__dep"><span>Vratná záloha při předání</span><span data-sum="dep">–</span></div>
       </div>
     </div>
 
@@ -142,7 +142,7 @@
         </label>
         <fieldset class="field full">
           <legend>Délka pronájmu</legend>
-          <div class="choices choices--4" data-form-durations></div>
+          <div class="choices choices--5" data-form-durations></div>
         </fieldset>
         <label class="field">
           <span>Město *</span>
@@ -180,7 +180,7 @@
           <textarea class="input" name="note" rows="3" placeholder="Např. výnos do 3. patra bez výtahu, rehabilitace po operaci kolena…"></textarea>
         </label>
         <div class="checks full">
-          <label class="check"><input type="checkbox" name="pad"> <span>Tlumicí podložka proti hluku (<span data-pad-price>100</span> Kč)</span></label>
+          <label class="check"><input type="checkbox" name="pad"> <span>Tlumicí podložka proti hluku (<span data-pad-price>100 Kč</span>)</span></label>
           <label class="check"><input type="checkbox" name="mat"> <span>Podložka pod rotoped (100 Kč)</span></label>
         </div>
         <!-- honeypot -->

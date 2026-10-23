@@ -60,7 +60,7 @@ test('chybějící povinná pole vrátí 400', async () => {
 
 test('neznámý stroj, délka nebo město neprojde', () => {
   assert.notDeepEqual(validate({ ...valid(), product: 'xx' }), []);
-  assert.notDeepEqual(validate({ ...valid(), duration: 7 }), []);
+  assert.notDeepEqual(validate({ ...valid(), duration: 5 }), []);
   assert.notDeepEqual(validate({ ...valid(), duration: '1' }), []);
   assert.notDeepEqual(validate({ ...valid(), city: 'Praha' }), []);
 });
@@ -104,4 +104,17 @@ test('selhání e-mailu provozovateli vrátí 500', async () => {
   getTransporter().sendMail = async () => { throw new Error('smtp down'); };
   const res = await handleInquiry(valid());
   assert.equal(res.status, 500);
+});
+
+test('delší doba: objednávka projde, cena „dohodou“', async () => {
+  const d = { ...valid(), duration: 4 };
+  assert.deepEqual(validate(d), []);
+  const { text } = buildOperatorEmail(d);
+  assert.match(text, /Rotoped magnetický, delší doba: dohodou/);
+  assert.match(text, /Tlumicí podložka: dohodou/);
+  assert.match(text, /Celkem: dohodou/);
+  assert.match(text, /Vratná záloha: 3 000 Kč/);
+  const res = await handleInquiry(d);
+  assert.equal(res.status, 200);
+  assert.match(sent[0].subject, /delší doba/);
 });

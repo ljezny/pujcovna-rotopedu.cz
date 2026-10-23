@@ -4,6 +4,9 @@
 export const DURATIONS = ['2 týdny', '4 týdny', '6 týdnů', '8 týdnů'];
 export const PADDLE_DURATIONS = ['víkend (čt–po)', 'týden', '10 dní', '14 dní'];
 export const DEFAULT_DURATION = 1;
+/* „Delší doba“ — poslední záložka za DURATIONS, cena dohodou */
+export const LONG = DURATIONS.length;
+export const LONG_LABEL = 'Delší doba';
 
 /* Stroje, texty a ceny podle původního webu www.pujcovna-rotopedu.cz (ceník platný od 1. 8. 2025).
    slug = podstránka /produkt/<slug> (stejné adresy jako na původním webu; oba orbitreky sdílí jednu),
@@ -86,17 +89,24 @@ export const ZONES = [
 ];
 
 export function durationLabel(product, i) {
+  if (i === LONG) return 'delší doba';
   return (product && product.paddle ? PADDLE_DURATIONS : DURATIONS)[i];
 }
 
-/** Souhrn objednávky — stejný výpočet na webu i v e-mailu. */
+export const isDuration = (i) => Number.isInteger(i) && i >= 0 && i <= LONG;
+
+/** Souhrn objednávky — stejný výpočet na webu i v e-mailu. U „Delší doby“ je půjčovné (a tím i celkem) null = dohodou. */
 export function priceOrder({ product, duration, delivery, pad, mat }) {
   const sel = PRODUCTS.find((p) => p.id === product);
-  const rent = sel ? sel.p[duration] : 0;
-  const padPrice = pad ? PAD_PRICES[duration] : 0;
+  const long = duration === LONG;
+  const rent = !sel ? 0 : long ? null : sel.p[duration];
+  const padPrice = !pad ? 0 : long ? null : PAD_PRICES[duration];
   const matPrice = mat ? MAT_PRICE : 0;
   const ship = delivery && sel ? sel.ship : 0;
-  return { product: sel, rent, pad: padPrice, mat: matPrice, ship, total: rent + padPrice + matPrice + ship, deposit: sel ? sel.dep : 0 };
+  const total = rent === null || padPrice === null ? null : rent + padPrice + matPrice + ship;
+  return { product: sel, rent, pad: padPrice, mat: matPrice, ship, total, deposit: sel ? sel.dep : 0 };
 }
 
 export const fmt = (n) => n.toLocaleString('cs-CZ').replace(/ /g, ' ');
+/** cena s „Kč“, null → „dohodou“ */
+export const fmtPrice = (n) => (n === null ? 'dohodou' : `${fmt(n)} Kč`);

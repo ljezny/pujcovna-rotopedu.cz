@@ -12,11 +12,11 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/styles.css?v=c7ef1c9d">
-  <script src="/js/consent.js?v=c7ef1c9d"></script>
+  <link rel="stylesheet" href="/css/styles.css?v=9a9c1153">
+  <script src="/js/consent.js?v=9a9c1153"></script>
   <!-- moduly importované z main.js taky s verzí, ať prohlížeč nedrží starý katalog -->
-  <script type="importmap">{"imports": {"/js/katalog.js": "/js/katalog.js?v=c7ef1c9d", "/js/obrazky.js": "/js/obrazky.js?v=c7ef1c9d"}}</script>
-  <script type="module" src="/js/main.js?v=c7ef1c9d"></script>
+  <script type="importmap">{"imports": {"/js/katalog.js": "/js/katalog.js?v=9a9c1153", "/js/obrazky.js": "/js/obrazky.js?v=9a9c1153"}}</script>
+  <script type="module" src="/js/main.js?v=9a9c1153"></script>
 </head>
 <body>
 
@@ -79,6 +79,10 @@
       </div>
     </div>
 
+    <div class="long-note" data-long-note hidden>
+      <strong>Potřebujete stroj na delší dobu?</strong>
+      <p>Za delší pronájem vám rádi nabídneme výhodnější cenu. Zavolejte nám na <a href="tel:+420774860054">774 860 054</a>, nebo pošlete <a href="#objednavka">objednávku</a> a cenu domluvíme.</p>
+    </div>
     <div class="products" data-products></div>
     <button type="button" class="products__more" data-more-products aria-expanded="false">Více: Bosu, cyklotrenažer, paddleboard</button>
 
@@ -87,7 +91,7 @@
       <div class="extras">
         <div class="extra">
           <div class="stack" style="gap:4px"><strong>Tlumicí podložka proti hluku</strong><span>Cena podle délky pronájmu, bez zálohy</span></div>
-          <span class="extra__price"><span data-pad-price>100</span> Kč</span>
+          <span class="extra__price" data-pad-price>100 Kč</span>
         </div>
         <div class="extra">
           <div class="stack" style="gap:4px"><strong>Podložka pod rotoped</strong><span>Ochrání podlahu</span></div>
@@ -191,12 +195,12 @@
       </div>
       <div class="summary" aria-live="polite">
         <span class="eyebrow">Souhrn</span>
-        <div class="summary__row"><span data-sum="label">Vyberte stroj · 4 týdny</span><span><span data-sum="rent">0</span> Kč</span></div>
-        <div class="summary__row" data-sum-row="pad" hidden><span>Tlumicí podložka</span><span><span data-sum="pad">0</span> Kč</span></div>
-        <div class="summary__row" data-sum-row="mat" hidden><span>Podložka pod rotoped</span><span><span data-sum="mat">0</span> Kč</span></div>
-        <div class="summary__row" data-sum-row="ship" hidden><span>Doprava k vám</span><span><span data-sum="ship">0</span> Kč</span></div>
-        <div class="summary__row summary__total"><span>Celkem</span><span><span data-sum="total">0</span> Kč</span></div>
-        <div class="summary__row summary__dep"><span>Vratná záloha při předání</span><span><span data-sum="dep">–</span> Kč</span></div>
+        <div class="summary__row"><span data-sum="label">Vyberte stroj · 4 týdny</span><span data-sum="rent">0 Kč</span></div>
+        <div class="summary__row" data-sum-row="pad" hidden><span>Tlumicí podložka</span><span data-sum="pad">0 Kč</span></div>
+        <div class="summary__row" data-sum-row="mat" hidden><span>Podložka pod rotoped</span><span data-sum="mat">0 Kč</span></div>
+        <div class="summary__row" data-sum-row="ship" hidden><span>Doprava k vám</span><span data-sum="ship">0 Kč</span></div>
+        <div class="summary__row summary__total"><span>Celkem</span><span data-sum="total">0 Kč</span></div>
+        <div class="summary__row summary__dep"><span>Vratná záloha při předání</span><span data-sum="dep">–</span></div>
       </div>
     </div>
 
@@ -210,7 +214,7 @@
         </label>
         <fieldset class="field full">
           <legend>Délka pronájmu</legend>
-          <div class="choices choices--4" data-form-durations></div>
+          <div class="choices choices--5" data-form-durations></div>
         </fieldset>
         <label class="field">
           <span>Město *</span>
@@ -248,7 +252,7 @@
           <textarea class="input" name="note" rows="3" placeholder="Např. výnos do 3. patra bez výtahu, rehabilitace po operaci kolena…"></textarea>
         </label>
         <div class="checks full">
-          <label class="check"><input type="checkbox" name="pad"> <span>Tlumicí podložka proti hluku (<span data-pad-price>100</span> Kč)</span></label>
+          <label class="check"><input type="checkbox" name="pad"> <span>Tlumicí podložka proti hluku (<span data-pad-price>100 Kč</span>)</span></label>
           <label class="check"><input type="checkbox" name="mat"> <span>Podložka pod rotoped (100 Kč)</span></label>
         </div>
         <!-- honeypot -->
