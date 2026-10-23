@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 
 import { buildAll } from '../scripts/build.mjs';
 import { PRODUCTS } from '../public/js/katalog.js';
@@ -40,5 +40,25 @@ test('detail ukazuje „Proč si … půjčit“, zbytek popisu je pod rozbalen�
     const prose = html.slice(html.indexOf('class="prose"'), html.indexOf('class="benefits"'));
     assert.match(prose, /^class="prose">\s*<h3>Proč si/, file);
     assert.match(prose, /<details class="more">/, file);
+  }
+});
+
+/** Párové značky musí být správně vnořené a uzavřené — jinak rozbitý text „spolkne“ zbytek stránky. */
+function unbalanced(html) {
+  const stack = [];
+  const body = html.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style|svg)\b[\s\S]*?<\/\1>/g, '');
+  for (const [, close, tag] of body.matchAll(/<(\/?)(p|ul|li|h[1-6]|strong|b|em|a|div|details|summary|section|main|aside|form|label|table|tr|td|th|span|figure|blockquote)\b[^>]*>/g)) {
+    if (!close) stack.push(tag);
+    else if (stack.pop() !== tag) return `neočekávané </${tag}>`;
+  }
+  return stack.length ? `neuzavřené <${stack.join('>, <')}>` : null;
+}
+
+test('texty strojů i vygenerované stránky mají uzavřené značky', () => {
+  for (const f of readdirSync('content/produkty')) {
+    assert.equal(unbalanced(readFileSync(`content/produkty/${f}`, 'utf8')), null, f);
+  }
+  for (const [file, html] of Object.entries(pages)) {
+    if (file.endsWith('.html')) assert.equal(unbalanced(html), null, file);
   }
 });
