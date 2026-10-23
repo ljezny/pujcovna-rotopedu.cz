@@ -45,7 +45,6 @@ Sesterský projekt `../beharna.cz` (stejný stack: statické HTML na Vercelu + s
 
 - [ ] Ověřit objednávku na produkci (skutečný e-mail na `rezervace@`).
 - [ ] Hero fotka — nahradit vlastní fotkou z půjčovny?
-- [ ] **Zrušit a vyměnit OpenAI API klíč** (zazněl v chatu 23. 10.), nový jen do `.env.local`.
 - [ ] Orbitrek magnetický a elektronický sdílí jednu fotku (původní web má jen jeden produkt „Eliptický trenažer“).
 - [ ] Pobočky Zlín a Liberec mají jiné provozovatele (fakturační údaje: Michaela Horská, IČ 09278095; Petr Martínek, IČ 04293762) a Olomouc je Půjčovna rotopedů SV s.r.o. (IČ 223013305) — objednávky teď chodí všechny na `rezervace@`. Rozhodnout, jestli je posílat i na `zlin@` / `olomouc@` apod.
 - [ ] Rozhodnout o GTM a Meta Pixelu (viz výše).
