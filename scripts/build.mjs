@@ -15,6 +15,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { PRODUCTS, DURATIONS, PADDLE_DURATIONS, fmt } from '../public/js/katalog.js';
+import { icon, iconFor } from './ikony.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(path.join(ROOT, p), 'utf8');
@@ -25,7 +26,9 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 const RAW = new Set(['content', 'thumbs', 'feats', 'priceRows', 'durationHeads', 'others', 'preselect', 'sceneClass']);
 
 function render(template, vars) {
-  const withPartials = template.replace(/<!-- include:([a-z-]+) -->\n?/g, (_, name) => read(`src/partials/${name}.html`));
+  const withPartials = template
+    .replace(/<!-- include:([a-z-]+) -->\n?/g, (_, name) => read(`src/partials/${name}.html`))
+    .replace(/\{\{icon:(\w+)\}\}/g, (_, name) => icon(name));
   return versionImages(withPartials.replace(/\{\{(\w+)\}\}/g, (_, key) => {
     if (!(key in vars)) throw new Error(`Chybí proměnná {{${key}}}`);
     return RAW.has(key) ? vars[key] : esc(vars[key]);
@@ -78,16 +81,40 @@ function pageName(slug) {
  * Popis stroje: sekce „Proč si … půjčit“ zůstane vidět jako hlavní body,
  * zbytek (úvod, doprava, tipy…) se schová pod rozbalovací tlačítko.
  */
+const LI = /<li>(?:<strong>([^<]*?)\s*<\/strong>)?\s*([\s\S]*?)<\/li>/g;
+
+/** „Proč si … půjčit“: odrážky „<strong>Nadpis:</strong> text“ → karty s ikonou */
+function whyCards(section) {
+  return section.replace(/<ul>([\s\S]*?)<\/ul>/, (_, items) => `<div class="why">${
+    [...items.matchAll(LI)].map(([, title = '', text]) => {
+      const t = title.replace(/:$/, '');
+      return `\n  <div class="why__item">${icon(iconFor(t || text), 'ico why__ico')}<div>${t ? `<strong>${t}</strong>` : ''}<p>${text.trim()}</p></div></div>`;
+    }).join('')}\n</div>`);
+}
+
+/** zbytek popisu: odrážky s nadpisem → seznam s ikonami, nadpisy sekcí s ikonou podle tématu */
+function iconize(html) {
+  return html
+    .replace(/<ul>([\s\S]*?)<\/ul>/g, (all, items) => (/<li><strong>/.test(items)
+      ? `<ul class="icon-list">${items.replace(LI, (_, title = '', text) => `<li>${icon(iconFor(title || text), 'ico icon-list__ico')}<span>${title ? `<strong>${title.trim()}</strong> ` : ''}${text.trim()}</span></li>`)}</ul>`
+      : all))
+    .replace(/<h3>([^<]*)<\/h3>/g, (all, t) => {
+      const name = iconFor(t);
+      return name === 'check' ? all : `<h3 class="h3-ico">${icon(name, 'ico')}${t}</h3>`;
+    });
+}
+
 function splitContent(body) {
   const m = body.match(/<h3>Proč si[\s\S]*?<\/ul>\n?/);
   if (!m) return body;
   const rest = (body.slice(0, m.index) + body.slice(m.index + m[0].length)).trim();
-  if (!rest) return m[0].trim();
-  return `${m[0].trim()}
+  const why = whyCards(m[0].trim());
+  if (!rest) return why;
+  return `${why}
 <details class="more">
   <summary><span data-more-label>Zobrazit další informace</span></summary>
   <div class="more__body">
-${rest}
+${iconize(rest)}
   </div>
 </details>`;
 }
@@ -119,6 +146,7 @@ function productPage(slug, items, version) {
     durationHeads: durations.map((d) => `<th scope="col">${esc(d)}</th>`).join(''),
     priceRows: items.map((p) => `<tr><th scope="row">${esc(p.name)}</th>${p.p.map((v) => `<td>${fmt(v)}</td>`).join('')}<td class="ptable__long">dohodou</td><td>${fmt(p.dep)}</td></tr>`).join(''),
     ship: fmt(main.ship),
+    deposit: fmt(main.dep),
     content: splitContent(body).split('\n').map((l) => `      ${l}`).join('\n'),
     others: others.map((p) => `<a class="other" href="/produkt/${p.slug}"><img src="/images/stroje/${p.img || p.id}.jpg" alt="" loading="lazy" width="160" height="120"><span>${esc(pageName(p.slug))}</span><small>od ${fmt(p.p[0])} Kč</small></a>`).join(''),
     preselect: ` data-preselect="${main.id}"`
