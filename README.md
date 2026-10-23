@@ -33,6 +33,8 @@ vercel.json          outputDirectory public, hlavičky, cache
 a stroje/ceny v `public/js/katalog.js`, pak `npm run build`. Vygenerované soubory se commitují (Vercel nic nebuildí);
 `npm test` selže, když build neodpovídá šablonám.
 
+Obrázky mají cache na rok, adresy proto nesou otisk obsahu (`?v=…`, `public/js/obrazky.js`). **Po výměně fotky vždy `npm run build`**, jinak návštěvníci uvidí starou.
+
 Detaily strojů mají stejné adresy jako původní web (`/produkt/rotoped-magneticky` …), oba orbitreky sdílí `/produkt/elipticky-trenazer`.
 
 ## Lokálně

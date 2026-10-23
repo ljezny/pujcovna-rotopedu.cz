@@ -4,6 +4,7 @@ import {
   DURATIONS, DEFAULT_DURATION, PRODUCTS, PAD_PRICES, CITIES, ZONES,
   durationLabel, priceOrder, fmt
 } from './katalog.js';
+import { obrazek } from './obrazky.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -17,7 +18,7 @@ const fill = (sel, html) => { const el = $(sel); if (el) el.innerHTML = html; };
 
 fill('[data-products]', PRODUCTS.map((p) => `
   <article class="product${p.extra ? ' product--extra' : ''}">
-    <a href="/produkt/${p.slug}" class="product__img${p.scene ? ' product__img--scene' : ''}"><img src="/images/stroje/${p.img || p.id}.jpg" alt="${esc(p.name)}" loading="lazy" width="700" height="700"></a>
+    <a href="/produkt/${p.slug}" class="product__img${p.scene ? ' product__img--scene' : ''}"><img src="${obrazek(`stroje/${p.img || p.id}.jpg`)}" alt="${esc(p.name)}" loading="lazy" width="700" height="700"></a>
     <div class="product__body">
       <span class="product__cat">${esc(p.cat)}</span>
       <h3 class="product__name" style="margin:0"><a href="/produkt/${p.slug}">${esc(p.name)}</a></h3>

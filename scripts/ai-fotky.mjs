@@ -134,5 +134,5 @@ function apply({ picks }) {
 
 const { cmd, opts } = args();
 if (cmd === 'generate') await generate(opts);
-else if (cmd === 'apply') apply(opts);
+else if (cmd === 'apply') { apply(opts); console.log('→ teď spusť npm run build (nové otisky obrázků, jinak prohlížeče drží staré fotky)'); }
 else console.log('Použití: node scripts/ai-fotky.mjs generate [--only vt] [--n 2] | apply vt=2 bp=1');

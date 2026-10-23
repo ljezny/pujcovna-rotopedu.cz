@@ -4,6 +4,7 @@
  * Ze šablon v src/ a katalogu (public/js/katalog.js) vyrobí:
  *   public/index.html               ← src/index.html
  *   public/produkt/<slug>.html      ← src/produkt.html + content/produkty/<slug>.html
+ *   public/js/obrazky.js            ← otisky obrázků v public/images (pro ?v= v main.js)
  *
  * Spuštění: `npm run build`. Výstup se commituje (Vercel nic nebuildí); test hlídá, že je aktuální.
  */
@@ -25,16 +26,38 @@ const RAW = new Set(['content', 'thumbs', 'feats', 'priceRows', 'durationHeads',
 
 function render(template, vars) {
   const withPartials = template.replace(/<!-- include:([a-z-]+) -->\n?/g, (_, name) => read(`src/partials/${name}.html`));
-  return withPartials.replace(/\{\{(\w+)\}\}/g, (_, key) => {
+  return versionImages(withPartials.replace(/\{\{(\w+)\}\}/g, (_, key) => {
     if (!(key in vars)) throw new Error(`Chybí proměnná {{${key}}}`);
     return RAW.has(key) ? vars[key] : esc(vars[key]);
-  });
+  }));
+}
+
+/**
+ * Otisky obrázků: obrázky mají cache „immutable“ na rok, takže při výměně fotky pod stejným názvem
+ * by prohlížeč držel starou. Adresa proto nese ?v=<otisk obsahu>.
+ */
+function imageVersions() {
+  const dir = path.join(ROOT, 'public/images');
+  const out = {};
+  for (const f of readdirSync(dir, { recursive: true }).sort()) {
+    if (!/\.(jpe?g|png|webp|svg)$/.test(f)) continue;
+    out[f.split(path.sep).join('/')] = createHash('sha1').update(readFileSync(path.join(dir, f))).digest('hex').slice(0, 8);
+  }
+  return out;
+}
+
+const IMAGES = imageVersions();
+
+/** /images/… → /images/…?v=<otisk> ve vygenerovaném HTML */
+function versionImages(html) {
+  return html.replace(/"\/images\/([^"?]+)"/g, (m, p) => (IMAGES[p] ? `"/images/${p}?v=${IMAGES[p]}"` : m));
 }
 
 /** Verze pro ?v= u CSS/JS — změní se s obsahem, takže prohlížeč nedrží starou verzi. */
 function assetVersion() {
   const h = createHash('sha1');
   for (const f of ['public/css/styles.css', 'public/js/main.js', 'public/js/katalog.js', 'public/js/consent.js']) h.update(read(f));
+  h.update(JSON.stringify(IMAGES));
   return h.digest('hex').slice(0, 8);
 }
 
@@ -106,6 +129,12 @@ function productPage(slug, items, version) {
 export function buildAll() {
   const version = assetVersion();
   const out = {
+    'public/js/obrazky.js': `/* Vygenerováno scripts/build.mjs — otisky obrázků, needitovat. */
+export const VERZE = ${JSON.stringify(IMAGES, null, 2)};
+
+/** "stroje/rm.jpg" → "/images/stroje/rm.jpg?v=…" */
+export const obrazek = (p) => \`/images/\${p}\${VERZE[p] ? \`?v=\${VERZE[p]}\` : ''}\`;
+`,
     'public/index.html': render(read('src/index.html'), {
       title: 'Půjčovna rotopedů a fitness strojů — Brno, Ostrava, Olomouc, Jihlava, Liberec, Zlín',
       description: 'Potřebujete doma rehabilitovat či zvýšit kondici? Pronajímáme kvalitní stroje přesně pro vaše potřeby. Půjčovna rotopedů a fitness vybavení v Brně, Ostravě, Olomouci, Jihlavě, Liberci a Zlíně.',
