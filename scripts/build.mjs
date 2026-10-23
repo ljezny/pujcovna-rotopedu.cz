@@ -51,6 +51,24 @@ function pageName(slug) {
   return readContent(slug).meta.name || PRODUCTS.find((p) => p.slug === slug).name;
 }
 
+/**
+ * Popis stroje: sekce „Proč si … půjčit“ zůstane vidět jako hlavní body,
+ * zbytek (úvod, doprava, tipy…) se schová pod rozbalovací tlačítko.
+ */
+function splitContent(body) {
+  const m = body.match(/<h3>Proč si[\s\S]*?<\/ul>\n?/);
+  if (!m) return body;
+  const rest = (body.slice(0, m.index) + body.slice(m.index + m[0].length)).trim();
+  if (!rest) return m[0].trim();
+  return `${m[0].trim()}
+<details class="more">
+  <summary><span data-more-label>Zobrazit další informace</span></summary>
+  <div class="more__body">
+${rest}
+  </div>
+</details>`;
+}
+
 function productPage(slug, items, version) {
   const { meta, body } = readContent(slug);
   const main = items[0];
@@ -78,7 +96,7 @@ function productPage(slug, items, version) {
     durationHeads: durations.map((d) => `<th scope="col">${esc(d)}</th>`).join(''),
     priceRows: items.map((p) => `<tr><th scope="row">${esc(p.name)}</th>${p.p.map((v) => `<td>${fmt(v)}</td>`).join('')}<td>${fmt(p.dep)}</td></tr>`).join(''),
     ship: fmt(main.ship),
-    content: body.split('\n').map((l) => `      ${l}`).join('\n'),
+    content: splitContent(body).split('\n').map((l) => `      ${l}`).join('\n'),
     others: others.map((p) => `<a class="other" href="/produkt/${p.slug}"><img src="/images/stroje/${p.img || p.id}.jpg" alt="" loading="lazy" width="160" height="120"><span>${esc(pageName(p.slug))}</span><small>od ${fmt(p.p[0])} Kč</small></a>`).join(''),
     preselect: ` data-preselect="${main.id}"`
   });

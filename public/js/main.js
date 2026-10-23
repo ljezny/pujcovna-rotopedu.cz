@@ -49,6 +49,11 @@ $('[data-date]').min = new Date().toISOString().slice(0, 10);
 // detail stroje: formulář má předvyplněný stroj
 if (form.dataset.preselect) form.product.value = form.dataset.preselect;
 
+// detail stroje: text tlačítka „další informace“ podle stavu
+$$('details.more').forEach((d) => d.addEventListener('toggle', () => {
+  $('[data-more-label]', d).textContent = d.open ? 'Skrýt další informace' : 'Zobrazit další informace';
+}));
+
 // ---------- překreslení podle stavu ----------
 
 function selectedProduct() {

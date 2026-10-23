@@ -33,3 +33,12 @@ test('orbitreky sdílí jednu stránku s oběma variantami', () => {
   assert.match(html, /Eliptical \(orbitrek\) magnetický/);
   assert.match(html, /Eliptical \(orbitrek\) elektronický/);
 });
+
+test('detail ukazuje „Proč si … půjčit“, zbytek popisu je pod rozbalením', () => {
+  for (const [file, html] of Object.entries(pages)) {
+    if (!file.startsWith('public/produkt/')) continue;
+    const prose = html.slice(html.indexOf('class="prose"'), html.indexOf('class="benefits"'));
+    assert.match(prose, /^class="prose">\s*<h3>Proč si/, file);
+    assert.match(prose, /<details class="more">/, file);
+  }
+});

@@ -173,6 +173,13 @@ select option { color: var(--ink); }
 .prose li { margin-bottom: 8px; }
 .prose strong, .prose b { color: var(--ink); }
 .prose a { text-decoration: underline; text-underline-offset: 3px; }
+.more { margin-top: 28px; border-top: 1px solid var(--line-2); }
+.more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; padding: 12px 22px; border: 1.5px solid var(--ink); border-radius: 999px; font-weight: 600; font-size: 16px; color: var(--ink); }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::after { content: '+'; font-size: 20px; line-height: 1; }
+.more[open] summary::after { content: '−'; }
+.more summary:hover { background: var(--ink); color: var(--paper); }
+.more__body { padding-top: 8px; }
 .benefits { position: sticky; top: 100px; background: var(--tint); border-radius: 4px; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
 .benefits h2 { margin: 0; }
 .benefit strong { display: block; font-size: 17px; margin-bottom: 4px; }
