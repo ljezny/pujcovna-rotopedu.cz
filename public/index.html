@@ -12,11 +12,11 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/styles.css?v=e72c9c11">
-  <script src="/js/consent.js?v=e72c9c11"></script>
+  <link rel="stylesheet" href="/css/styles.css?v=aa046c72">
+  <script src="/js/consent.js?v=aa046c72"></script>
   <!-- moduly importované z main.js taky s verzí, ať prohlížeč nedrží starý katalog -->
-  <script type="importmap">{"imports": {"/js/katalog.js": "/js/katalog.js?v=e72c9c11", "/js/obrazky.js": "/js/obrazky.js?v=e72c9c11"}}</script>
-  <script type="module" src="/js/main.js?v=e72c9c11"></script>
+  <script type="importmap">{"imports": {"/js/katalog.js": "/js/katalog.js?v=aa046c72", "/js/obrazky.js": "/js/obrazky.js?v=aa046c72"}}</script>
+  <script type="module" src="/js/main.js?v=aa046c72"></script>
 </head>
 <body>
 
@@ -50,7 +50,14 @@
       <div><strong>6 měst</strong><br>výdejní sklady</div>
     </div>
   </div>
-  <div class="hero__img"><img src="/images/hero.jpg?v=bc83ab65" alt="Stroje z naší půjčovny: rotoped, spinningové kolo, běžecký pás, veslovací trenažer a eliptical" width="800" height="1200" fetchpriority="high"></div>
+  <!-- koláž z fotek strojů v ceníku (images/stroje/*.jpg) -->
+  <div class="hero__img hero__collage">
+    <img src="/images/stroje/rm.jpg?v=1bb9c2ee" alt="Rotoped" width="1000" height="667" fetchpriority="high">
+    <img src="/images/stroje/sk.jpg?v=53381142" alt="Spinningové kolo" width="1000" height="667">
+    <img src="/images/stroje/vt.jpg?v=461deb97" alt="Veslovací trenažer" width="1000" height="667" class="hero__collage-wide">
+    <img src="/images/stroje/bp.jpg?v=7d26343b" alt="Běžecký pás" width="1000" height="667" class="hero__collage-bp">
+    <img src="/images/stroje/om.jpg?v=c4dd90dd" alt="Eliptical (orbitrek)" width="1000" height="667" class="hero__collage-om">
+  </div>
 </section>
 
 <section id="jak" class="rule">

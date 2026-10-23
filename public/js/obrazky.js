@@ -1,6 +1,5 @@
 /* Vygenerováno scripts/build.mjs — otisky obrázků, needitovat. */
 export const VERZE = {
-  "hero.jpg": "bc83ab65",
   "logo-znak.jpg": "72397b74",
   "stroje/bo.jpg": "475c355f",
   "stroje/bp.jpg": "7d26343b",

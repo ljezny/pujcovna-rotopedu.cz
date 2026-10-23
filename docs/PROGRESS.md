@@ -9,7 +9,7 @@ Sesterský projekt `../beharna.cz` (stejný stack: statické HTML na Vercelu + s
 - **Web podle návrhu z Claude Design** (export `~/Downloads/Pujcovna rotopedu.html`, rozbalený do statického HTML/CSS/JS):
   - `public/index.html` + `css/styles.css` + `js/main.js`; fonty Archivo a JetBrains Mono jsou lokálně v `public/fonts/`.
   - Ceník, pobočky a zóny dopravy jsou v `public/js/katalog.js`. Stejný soubor importuje i `lib/poptavka.js`, takže cena v e-mailu se počítá ze stejných dat jako na webu (číslům z prohlížeče se nevěří).
-  - Hero fotka `images/hero.jpg` = AI koláž pěti strojů (viz níže); obrázky mají v adrese otisk `?v=` (po výměně vždy `npm run build`).
+  - Hero = koláž v CSS mřížce z fotek strojů v ceníku (`images/stroje/*.jpg`, s nálepkou); obrázky mají v adrese otisk `?v=` (po výměně vždy `npm run build`).
   - Objednávka: stroj, délka, město, datum, vyzvednutí/dovoz (+ adresa), jméno, telefon (povinný), e-mail (nepovinný; bez něj nechodí potvrzení zákazníkovi), poznámka, podložky. E-mail provozovateli obsahuje souhrn ceny a zálohy.
   - **Obsah převzatý z původního webu** (23. 10.): stroje, názvy, pořadí, kategorie a výhody ✔️ podle ceníku a WooCommerce produktů, ceník (platný od 1. 8. 2025), doprava, pobočky (vč. telefonů Liberec a Zlín), 5 kroků „Jak to funguje“, skutečné recenze, příběh zakladatele, poukazy, odkaz na paddleboardbrno.cz. Odpovídá se „za pár hodin“ (dřív v návrhu „do 24 hodin“).
   - **Detaily strojů** `/produkt/<slug>` (stejné adresy jako původní web): galerie, výhody, tabulka cen, delší popis z původního webu (`content/produkty/`), výhody půjčení, další stroje a objednávkový formulář s předvyplněným strojem. Generuje `npm run build` (`scripts/build.mjs` ze šablon v `src/`).
@@ -44,7 +44,7 @@ Sesterský projekt `../beharna.cz` (stejný stack: statické HTML na Vercelu + s
 ## Další kroky
 
 - [ ] Ověřit objednávku na produkci (skutečný e-mail na `rezervace@`).
-- [x] Hero: AI koláž 5 strojů (`node scripts/ai-fotky.mjs hero --style kolaz`), video vyzkoušené a vrácené zpět.
+- [x] Hero: koláž z fotek ceníku (vyzkoušeno i video a AI koláž `ai-fotky.mjs hero` — bez nálepek, nepoužito).
 - [ ] Orbitrek magnetický a elektronický sdílí jednu fotku (původní web má jen jeden produkt „Eliptický trenažer“).
 - [ ] Pobočky Zlín a Liberec mají jiné provozovatele (fakturační údaje: Michaela Horská, IČ 09278095; Petr Martínek, IČ 04293762) a Olomouc je Půjčovna rotopedů SV s.r.o. (IČ 223013305) — objednávky teď chodí všechny na `rezervace@`. Rozhodnout, jestli je posílat i na `zlin@` / `olomouc@` apod.
 - [ ] Rozhodnout o GTM a Meta Pixelu (viz výše).

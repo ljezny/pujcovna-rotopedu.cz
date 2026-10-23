@@ -89,6 +89,12 @@ select option { color: var(--ink); }
 .hero__stats strong { font-size: 22px; color: var(--ink); }
 .hero__img { aspect-ratio: 2 / 3; width: 100%; max-width: 460px; justify-self: center; border-radius: 4px; overflow: hidden; background: #e4ebf3; } /* koláž strojů je 2:3 */
 .hero__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* 10 sloupců: nahoře 2 × 5, uprostřed veslo přes celou šířku, dole pás 6 + úzký eliptical 4 (dlouhé stroje se jinak ořízly) */
+.hero__collage { display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: 1fr 1.15fr 1fr; gap: 6px; background: var(--paper); }
+.hero__collage img { min-height: 0; min-width: 0; border-radius: 3px; grid-column: span 5; }
+.hero__collage-wide { grid-column: 1 / -1 !important; }
+.hero__collage-bp { grid-column: span 6 !important; }
+.hero__collage-om { grid-column: span 4 !important; }
 
 /* jak to funguje */
 .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 24px; }
